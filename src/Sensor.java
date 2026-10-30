@@ -1,3 +1,5 @@
+import java.util.LocalDateTime;
+
 public class Sensor {
     private int idSensor;
     private String marca;
