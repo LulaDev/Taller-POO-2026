@@ -21,7 +21,7 @@ public class Alerta {
     }
 
     //metodos
-    public void asignarEquipo(e: EquipoRespuesta){
+    public void asignarEquipo(EquipoRespuesta e){
     }
 
     public boolean requiereEquipo(){
