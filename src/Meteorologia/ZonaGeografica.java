@@ -7,15 +7,17 @@ public class ZonaGeografica {
     private NivelVulnerabilidad nivelVulnerabilidad;
     private NivelAlerta nivelAlertaActual ;
     private List<EstacionMeteorologica> estaciones;
+    private List<ValorHistorico> valoresHistoricos;
     private List<Alerta> alertas;
 
     //constructor
-    public ZonaGeografica(int idZona,String nombre,NivelVulnerabilidad nivelVunerabilidad,NivelAlerta nivelAlertaActual,List<EstacionMeteorologica> estaciones,List<Alerta> alertas){
+    public ZonaGeografica(int idZona,String nombre,NivelVulnerabilidad nivelVunerabilidad,NivelAlerta nivelAlertaActual,List<EstacionMeteorologica> estaciones,List<Alerta> alertas,List<ValorHistorico> valoresHistoricos){
         this.idZona=idZona;
         this.nombre=nombre;
         this.nivelVulnerabilidad=nivelVunerabilidad;
         this.nivelAlertaActual=nivelAlertaActual;
         this.estaciones=estaciones;
+        this.valoresHistoricos=valoresHistoricos;
         this.alertas=alertas;
     }
     //getters y setters
@@ -57,6 +59,14 @@ public class ZonaGeografica {
 
     public void setEstaciones(List<EstacionMeteorologica> estaciones) {
         this.estaciones = estaciones;
+    }
+
+    public List<ValorHistorico> getValoresHistoricos() {
+        return valoresHistoricos;
+    }
+
+    public void setValoresHistoricos(List<ValorHistorico> valoresHistoricos) {
+     this.valoresHistoricos = valoresHistoricos;
     }
 
     public List<Alerta> getAlertas() {
