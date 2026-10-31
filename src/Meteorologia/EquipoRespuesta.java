@@ -1,16 +1,18 @@
 package Meteorologia;
-
+import java.util.List;
 public class EquipoRespuesta {
     //Atributos
     private int idEquipo;
     private String nombreEquipo;
     private boolean disponible;
+    private List<ResponsableTecnico> integrantes;
 
     //Constructor
-    public EquipoRespuesta(int idEquipo,String nombreEquipo,boolean disponible){
+    public EquipoRespuesta(int idEquipo,String nombreEquipo,boolean disponible,List<ResponsableTecnico> integrantes){
         this.idEquipo=idEquipo;
         this.nombreEquipo=nombreEquipo;
         this.disponible=disponible;
+        this.integrantes=integrantes;
     }
 
     //getters y setters
@@ -37,6 +39,14 @@ public class EquipoRespuesta {
 
     public void setDisponible(boolean disponible) {
         this.disponible = disponible;
+    }
+
+    public List<ResponsableTecnico> getIntegrantes() {
+        return integrantes;
+    }
+
+    public void setIntegrantes(List<ResponsableTecnico> integrantes) {
+        this.integrantes = integrantes;
     }
 
     //metodo
