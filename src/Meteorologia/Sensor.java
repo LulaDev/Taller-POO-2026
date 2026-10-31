@@ -1,6 +1,7 @@
 package Meteorologia;
 
-import java.util.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Sensor {
     private int idSensor;
@@ -21,11 +22,11 @@ public class Sensor {
     }
 
     //metodos
-    public Medicion registrar(mm: double, fh: LocalDateTime){
+    public Medicion registrar( double  mm , LocalDateTime fh){
     
     }
 
-    public boolean validar(mm: double){
+    public boolean validar(double mm){
         
     }
 
