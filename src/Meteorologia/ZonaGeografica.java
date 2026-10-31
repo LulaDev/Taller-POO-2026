@@ -1,17 +1,22 @@
 package Meteorologia;
-
+import java.util.List;
 public class ZonaGeografica {
     //atributos
     private int idZona;
     private String nombre;
     private NivelVulnerabilidad nivelVulnerabilidad;
     private NivelAlerta nivelAlertaActual ;
+    private List<EstacionMeteorologica> estaciones;
+    private List<Alerta> alertas;
+
     //constructor
-    public ZonaGeografica(int idZona,String nombre,NivelVulnerabilidad nivelVunerabilidad,NivelAlerta nivelAlertaActual){
+    public ZonaGeografica(int idZona,String nombre,NivelVulnerabilidad nivelVunerabilidad,NivelAlerta nivelAlertaActual,List<EstacionMeteorologica> estaciones,List<Alerta> alertas){
         this.idZona=idZona;
         this.nombre=nombre;
         this.nivelVulnerabilidad=nivelVunerabilidad;
         this.nivelAlertaActual=nivelAlertaActual;
+        this.estaciones=estaciones;
+        this.alertas=alertas;
     }
     //getters y setters
     public int getIdZona() {
@@ -44,6 +49,22 @@ public class ZonaGeografica {
     public void setNivelAlertaActual(NivelAlerta nivelAlertaActual) {
 
         this.nivelAlertaActual = nivelAlertaActual;
+    }
+
+    public List<EstacionMeteorologica> getEstaciones() {
+        return estaciones;
+    }
+
+    public void setEstaciones(List<EstacionMeteorologica> estaciones) {
+        this.estaciones = estaciones;
+    }
+
+    public List<Alerta> getAlertas() {
+        return alertas;
+    }
+
+    public void setAlertas(List<Alerta> alertas) {
+        this.alertas = alertas;
     }
 
     //metodos

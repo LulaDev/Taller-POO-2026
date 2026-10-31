@@ -1,6 +1,6 @@
 package Meteorologia;
 
-public class EstacionMetereologica {
+public class EstacionMeteorologica {
     //atributos
     private int idEstacion;
     private String nombre;
@@ -11,7 +11,7 @@ public class EstacionMetereologica {
     private TipoEstacion tipo;
 
     //constructor
-    public EstacionMetereologica(int idEstacion,String nombre,double latitud,double longitud,double altitud,EstadoOperativo estado,TipoEstacion tipo){
+    public EstacionMeteorologica(int idEstacion, String nombre, double latitud, double longitud, double altitud, EstadoOperativo estado, TipoEstacion tipo){
         this.idEstacion=idEstacion;
         this.nombre=nombre;
         this.latitud=latitud;
