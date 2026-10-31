@@ -9,15 +9,17 @@ public class Alerta {
     private TipoEventoClimatico evento;
     private String descripcion;
     private boolean atendida;
+    private EquipoRespuesta equipoRespuesta;
 
     //constructor
-    public Alerta(int idAlerta, LocalDateTime fechaHoraEmision, NivelAlerta nivel, TipoEventoClimatico evento, String descripcion, boolean atendida){
+    public Alerta(int idAlerta, LocalDateTime fechaHoraEmision, NivelAlerta nivel, TipoEventoClimatico evento, String descripcion, boolean atendida, EquipoRespuesta equipoRespuesta){
         this.idAlerta = idAlerta;
         this.fechaHoraEmision = fechaHoraEmision;
         this.nivel = nivel;
         this.evento = evento;
         this.descripcion = descripcion;
         this.atendida = atendida;
+        this.equipoRespuesta = equipoRespuesta;
     }
 
     //metodos
@@ -74,5 +76,13 @@ public class Alerta {
 
     public void setAtendida(boolean atendida) {
         this.atendida = atendida;
+    }
+
+    public EquipoRespuesta getEquipoRespuesta(){
+        return equipoRespuesta;
+    }
+
+    public setEquipoRespuesta(EquipoRespuesta equipoRespuesta){
+        this.equipoRespuesta = equipoRespuesta;
     }
 }
