@@ -1,3 +1,5 @@
+package Meteorologia;
+
 public class EquipoRespuesta {
     //Atributos
     private int idEquipo;
@@ -38,7 +40,7 @@ public class EquipoRespuesta {
     }
 
     //metodo
-    public void agregarIntegrante(r: ResponsableTecnico){
+    public void agregarIntegrante(ResponsableTecnico r){
 
     }
 }

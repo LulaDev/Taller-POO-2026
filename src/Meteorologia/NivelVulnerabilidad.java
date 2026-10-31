@@ -1,3 +1,5 @@
+package Meteorologia;
+
 public enum NivelVulnerabilidad {
     BAJO,
     MEDIO,

@@ -1,3 +1,5 @@
+package Meteorologia;
+
 public enum NivelAlerta {
     VERDE,
     AMARILLA,

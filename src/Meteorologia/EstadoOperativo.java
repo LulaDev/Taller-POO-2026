@@ -1,3 +1,5 @@
+package Meteorologia;
+
 public enum EstadoOperativo {
     OPERATIVO,
     EN_MANTENIMIENTO,

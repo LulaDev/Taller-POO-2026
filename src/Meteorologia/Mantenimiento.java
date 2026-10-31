@@ -1,3 +1,5 @@
+package Meteorologia;
+
 import java.time.LocalDate;
 
 public class Mantenimiento {

@@ -1,3 +1,5 @@
+package Meteorologia;
+
 public abstract class Persona {
     //Atributos
     protected int dni;

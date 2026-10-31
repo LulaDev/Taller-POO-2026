@@ -1,3 +1,5 @@
+package Meteorologia;
+
 import java.util.LocalDateTime;
 
 public class Sensor {

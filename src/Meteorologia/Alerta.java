@@ -1,21 +1,23 @@
+package Meteorologia;
 import java.time.LocalDateTime;
-public class Alerta { 
+
+public class Alerta {
     //atributos
     private int idAlerta;
-    private LocalDataTime fechaHoraEmision;
+    private LocalDateTime fechaHoraEmision;
     private NivelAlerta nivel;
     private TipoEventoClimatico evento;
     private String descripcion;
     private boolean atendida;
 
     //constructor
-    public Alerta(int idAlerta, LocalDataTime fechaHoraEmision, NivelAlerta nivel, TipoEventoClimatico evento, String descripcion, boolean atendida){
+    public Alerta(int idAlerta, LocalDateTime fechaHoraEmision, NivelAlerta nivel, TipoEventoClimatico evento, String descripcion, boolean atendida){
         this.idAlerta = idAlerta;
         this.fechaHoraEmision = fechaHoraEmision;
         this.nivel = nivel;
         this.evento = evento;
         this.descripcion = descripcion;
-        this.atendida = atendida
+        this.atendida = atendida;
     }
 
     //metodos
@@ -34,11 +36,11 @@ public class Alerta {
         this.idAlerta = idAlerta;
     }
 
-    public LocalDataTime getFechaHoraEmision() {
+    public LocalDateTime getFechaHoraEmision() {
         return fechaHoraEmision;
     }
 
-    public void setFechaHoraEmision(LocalDataTime fechaHoraEmision) {
+    public void setFechaHoraEmision(LocalDateTime fechaHoraEmision) {
         this.fechaHoraEmision = fechaHoraEmision;
     }
 

@@ -1,3 +1,5 @@
+package Meteorologia;
+
 public class EstacionMetereologica {
     //atributos
     private int idEstacion;
@@ -77,10 +79,10 @@ public class EstacionMetereologica {
     }
 
     //metodos
-    public void instalarSensor(s: Sensor){
+    public void instalarSensor(Sensor s){
 
     }
-    public void retirarSensor(s: Sensor){
+    public void retirarSensor(Sensor s){
 
     }
     public boolean estaOperativa(){

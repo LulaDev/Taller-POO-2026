@@ -1,3 +1,5 @@
+package Meteorologia;
+
 public class ValorHistorico {
     //atributos
     private int mes;

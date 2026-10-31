@@ -1,3 +1,5 @@
+package Meteorologia;
+
 public enum TipoEventoClimatico {
     LLUVIA_COPIOSA,
     CRECIDA_RIO,

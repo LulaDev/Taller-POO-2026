@@ -1,3 +1,5 @@
+package Meteorologia;
+
 public class ResponsableTecnico {
     //atributos
     private String especialidad;
