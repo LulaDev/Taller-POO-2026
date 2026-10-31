@@ -2,7 +2,7 @@ package Meteorologia;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
+import java.util.List;
 public class Sensor {
     private int idSensor;
     private String marca;
@@ -10,15 +10,17 @@ public class Sensor {
     private double precision;
     private EstadoOperativo estado;
     private LocalDate ultimaCalibracion;
+    private List<Medicion> mediciones;
 
     //constructor
-    public Sensor(int idSensor, String marca, String modelo, double precision, EstadoOperativo estado, LocalDate ultimaCalibracion) {
+    public Sensor(int idSensor, String marca, String modelo, double precision, EstadoOperativo estado, LocalDate ultimaCalibracion,List<Medicion> mediciones) {
         this.idSensor = idSensor;
         this.marca = marca;
         this.modelo = modelo;
         this.precision = precision;
         this.estado = estado;
         this.ultimaCalibracion = ultimaCalibracion;
+        this.mediciones=mediciones;
     }
 
     //metodos
@@ -81,5 +83,12 @@ public class Sensor {
 
     public void setUltimaCalibracion(LocalDate ultimaCalibracion) {
         this.ultimaCalibracion = ultimaCalibracion;
+    }
+    public List<Medicion> getMediciones() {
+        return mediciones;
+    }
+
+    public void setMediciones(List<Medicion> mediciones) {
+        this.mediciones = mediciones;
     }
 }

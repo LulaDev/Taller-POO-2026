@@ -9,6 +9,7 @@ public class Medicion {
     private double milimetros;
     private boolean anomala;
 
+
     //constructor
     public Medicion(int idMedicion,LocalDateTime fechaHora,double milimetros,boolean anomala){
         this.idMedicion=idMedicion;
@@ -53,4 +54,6 @@ public class Medicion {
     public void setAnomala(boolean anomala) {
         this.anomala = anomala;
     }
+
+
 }
