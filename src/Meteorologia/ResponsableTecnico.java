@@ -1,18 +1,24 @@
 package Meteorologia;
+import java.util.List;
 
-public class ResponsableTecnico {
+public class ResponsableTecnico extends Persona{
     //atributos
     private String especialidad;
     private String numeroLicencia;
+    private List<EstacionMeteorologica> estacionesACargo;
+    private List<Mantenimiento> mantenimientosRealizados;
+    private EquipoRespuesta equipoRespuesta;
 
     //constructor
-    public ResponsableTecnico(String especialidad,String numeroLicencia){
+    public ResponsableTecnico(int dni, String nombre, String apellido, String correoElectronico, String celular, String especialidad, String numeroLicencia, List<EstacionMeteorologica> estacionesACargo, List<Mantenimiento> mantenimientosRealizados, EquipoRespuesta equipoRespuesta){
+        super(dni, nombre, apellido, correoElectronico, celular);
         this.especialidad=especialidad;
         this.numeroLicencia=numeroLicencia;
+        this.estacionesACargo = estacionesACargo;
+        this.mantenimientosRealizados = mantenimientosRealizados;
     }
+    
     //getters y  setters
-
-
     public String getEspecialidad() {
         return especialidad;
     }
@@ -27,5 +33,29 @@ public class ResponsableTecnico {
 
     public void setNumeroLicencia(String numeroLicencia) {
         this.numeroLicencia = numeroLicencia;
+    }
+
+    public List<EstacionMeteorologica> getEstacionesACargo(){
+        return estacionesACargo;
+    }
+
+    public void setEstacionesACargo(List<EstacionMeteorologica> estacionesACargo){
+        this.estacionesACargo = estacionesACargo;
+    }
+
+    public List<Mantenimiento> getMantenimientosRealizados(){
+        return mantenimientosRealizados;
+    }
+
+    public void setMantimientosRealizados(List<Mantenimiento> mantenimientosRealizados){
+        this.mantenimientosRealizados = mantenimientosRealizados;
+    }
+
+    public EquipoRespuesta getEquipoRespuesta(){
+        return equipoRespuesta;
+    }
+
+    public void setEquipoRespuesta(EquipoRespuesta equipoRespuesta){
+        this.equipoRespuesta = equipoRespuesta;
     }
 }
