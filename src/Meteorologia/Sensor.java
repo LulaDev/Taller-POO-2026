@@ -91,4 +91,9 @@ public class Sensor {
     public void setMediciones(List<Medicion> mediciones) {
         this.mediciones = mediciones;
     }
+    public void validar(double mm){
+        if(mm < 0 || mm > 500 ){
+            throw new LecturaInvalidaException("Error: la lectura de " + mm + "mm esta fuera de rango permitido (0 - 500 mm)")
+        }
+    }
 }
