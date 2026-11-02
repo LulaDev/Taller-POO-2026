@@ -9,9 +9,12 @@ public class ZonaGeografica {
     private List<EstacionMeteorologica> estaciones;
     private List<ValorHistorico> valoresHistoricos;
     private List<Alerta> alertas;
+    private double umbralAmarilla;
+    private double umbralNaranja;
+    private double umbralRoja;
 
     //constructor
-    public ZonaGeografica(int idZona,String nombre,NivelVulnerabilidad nivelVunerabilidad,NivelAlerta nivelAlertaActual,List<EstacionMeteorologica> estaciones,List<Alerta> alertas,List<ValorHistorico> valoresHistoricos){
+    public ZonaGeografica(int idZona,String nombre,NivelVulnerabilidad nivelVunerabilidad,NivelAlerta nivelAlertaActual,List<EstacionMeteorologica> estaciones,List<Alerta> alertas,List<ValorHistorico> valoresHistoricos,double umbralAmarilla,double umbralNaranja,double umbralRoja){
         this.idZona=idZona;
         this.nombre=nombre;
         this.nivelVulnerabilidad=nivelVunerabilidad;
@@ -19,6 +22,9 @@ public class ZonaGeografica {
         this.estaciones=estaciones;
         this.valoresHistoricos=valoresHistoricos;
         this.alertas=alertas;
+        this.umbralAmarilla=umbralAmarilla;
+        this.umbralNaranja=umbralNaranja;
+        this.umbralRoja=umbralRoja;
     }
     //getters y setters
     public int getIdZona() {
@@ -76,6 +82,18 @@ public class ZonaGeografica {
     public void setAlertas(List<Alerta> alertas) {
         this.alertas = alertas;
     }
+
+    public double getUmbralAmarilla() {return umbralAmarilla;}
+
+    public void setUmbralAmarilla(double umbralAmarilla) {this.umbralAmarilla = umbralAmarilla;}
+
+    public double getUmbralNaranja() {return umbralNaranja;}
+
+    public void setUmbralNaranja(double umbralNaranja) {this.umbralNaranja = umbralNaranja;}
+
+    public double getUmbralRoja() {return umbralRoja;}
+
+    public void setUmbralRoja(double umbralRoja) {this.umbralRoja = umbralRoja;}
 
     //metodos
     public double lluviaAcumulada24h(){
