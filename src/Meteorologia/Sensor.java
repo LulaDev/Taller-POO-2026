@@ -13,7 +13,7 @@ public class Sensor {
     private List<Medicion> mediciones;
 
     //constructor
-    public Sensor(int idSensor, String marca, String modelo, double precision, EstadoOperativo estado, LocalDate ultimaCalibracion,List<Medicion> mediciones) {
+    public Sensor(int idSensor, String marca, String modelo, double precision, EstadoOperativo estado, LocalDate ultimaCalibracion,List<Medicion> mediciones,Boolean esAnomala) {
         this.idSensor = idSensor;
         this.marca = marca;
         this.modelo = modelo;
@@ -21,6 +21,7 @@ public class Sensor {
         this.estado = estado;
         this.ultimaCalibracion = ultimaCalibracion;
         this.mediciones=mediciones;
+
     }
 
     //metodos
@@ -91,9 +92,31 @@ public class Sensor {
     public void setMediciones(List<Medicion> mediciones) {
         this.mediciones = mediciones;
     }
+
+
+
+    //metoodos
     public void validar(double mm){
         if(mm < 0 || mm > 500 ){
             throw new LecturaInvalidaException("Error: la lectura de " + mm + "mm esta fuera de rango permitido (0 - 500 mm)")
         }
+    }
+    public boolean requiereCalibracion(){
+        if(this.ultimaCalibracion == null){
+            return true;
+        }
+        LocalDate fechaLimite=this.ultimaCalibracion.plusMonths(12);
+        return LocalDate.now().isAfter(fechaLimite);
+    }
+    public void registrar(double mm,LocalDate fh){
+        if(this.mediciones != null && !this.mediciones.isEmpty()){
+            Medicion ultimaMedicion=this.mediciones.get(this.mediciones.size()-1);
+            double diferencia = Math.abs(mm - ultimaMedicion.getMilimetros());
+            if (diferencia > 100.0){
+                anomala= true;
+            }
+        }
+        Medicion nuevaMedicion = new Medicion(mm, fh ,anomala);
+        this.mediciones.add(nuevaMedicion);
     }
 }

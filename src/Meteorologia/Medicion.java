@@ -17,6 +17,11 @@ public class Medicion {
         this.milimetros=milimetros;
         this.anomala=anomala;
     }
+    public Medicion(double milimetros,LocalDateTime fechaHora, boolean anomala){
+        this.milimetros=milimetros;
+        this.fechaHora=fechaHora;
+        this.anomala=anomala;
+    }
 
     //getters y setters
 
