@@ -1,6 +1,7 @@
 package Meteorologia;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.ArrayList;
 import static java.util.Locale.filter;
 
 public class ZonaGeografica {
@@ -22,9 +23,9 @@ public class ZonaGeografica {
         this.nombre=nombre;
         this.nivelVulnerabilidad=nivelVunerabilidad;
         this.nivelAlertaActual=nivelAlertaActual;
-        this.estaciones=estaciones;
-        this.valoresHistoricos=valoresHistoricos;
-        this.alertas=alertas;
+        this.estaciones = (estaciones != null) ? estaciones : new ArrayList<>();
+        this.valoresHistoricos = (valoresHistoricos != null) ? valoresHistoricos : new ArrayList<>();
+        this.alertas = (alertas != null) ? alertas : new ArrayList<>();
         this.umbralAmarilla=umbralAmarilla;
         this.umbralNaranja=umbralNaranja;
         this.umbralRoja=umbralRoja;
@@ -133,6 +134,15 @@ public class ZonaGeografica {
         }
     }
     public Alerta emitirAlerta(TipoEventoClimatico ev){
-        return null;
+        NivelAlerta nuevoNivel = evaluarRiesgo();
+        this.nivelAlertaActual = nuevoNivel;
+
+        int nuevoId = this.alertas.size() + 1;
+        String desc = "Alerta emitida automáticamente por acumulación de lluvia en 24h: " + lluviaAcumulada24h() + " mm.";
+        
+        Alerta nuevaAlerta = new Alerta(nuevoId, LocalDateTime.now(), nuevoNivel, ev, desc, false, null);
+        this.alertas.add(nuevaAlerta);
+        
+        return nuevaAlerta;
     }
 }

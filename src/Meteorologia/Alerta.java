@@ -24,10 +24,14 @@ public class Alerta {
 
     //metodos
     public void asignarEquipo(EquipoRespuesta e){
+        if (e != null) {
+            this.equipoRespuesta = e;
+            this.atendida = true;
+        }
     }
 
     public boolean requiereEquipo(){
-
+        return this.nivel == NivelAlerta.NARANJA || this.nivel == NivelAlerta.ROJA;
     }
     
     //getters y setters

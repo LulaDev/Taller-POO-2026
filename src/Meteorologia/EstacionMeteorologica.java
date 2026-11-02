@@ -1,5 +1,6 @@
 package Meteorologia;
 import java.util.List;
+import java.util.ArrayList;
 
 public class EstacionMeteorologica {
     //atributos
@@ -111,10 +112,14 @@ public class EstacionMeteorologica {
 
     //metodos
     public void instalarSensor(Sensor s){
-
+        if (s != null && !this.sensores.contains(s)) {
+            this.sensores.add(s);
+        }
     }
     public void retirarSensor(Sensor s){
-
+        if (s != null) {
+            this.sensores.remove(s);
+        }
     }
     public boolean estaOperativa(){
         return this.estado == EstadoOperativo.OPERATIVO;

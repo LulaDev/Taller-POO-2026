@@ -3,6 +3,8 @@ package Meteorologia;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.ArrayList;
+
 public class Sensor {
     private int idSensor;
     private String marca;
@@ -13,15 +15,14 @@ public class Sensor {
     private List<Medicion> mediciones;
 
     //constructor
-    public Sensor(int idSensor, String marca, String modelo, double precision, EstadoOperativo estado, LocalDate ultimaCalibracion,List<Medicion> mediciones,Boolean esAnomala) {
+    public Sensor(int idSensor, String marca, String modelo, double precision, EstadoOperativo estado, LocalDate ultimaCalibracion,List<Medicion> mediciones) {
         this.idSensor = idSensor;
         this.marca = marca;
         this.modelo = modelo;
         this.precision = precision;
         this.estado = estado;
         this.ultimaCalibracion = ultimaCalibracion;
-        this.mediciones=mediciones;
-
+        this.mediciones = (mediciones != null) ? mediciones : new ArrayList<>();
     }
 
     //getters y setters
@@ -98,6 +99,9 @@ public class Sensor {
     }
 
     public void registrar(double mm,LocalDateTime fh){
+        if (this.estado != EstadoOperativo.OPERATIVO) {
+            throw new IllegalStateException("No se pueden registrar mediciones en un sensor que no está operativo.");
+        }
         validar(mm);
         boolean anomala =false;
         if(this.mediciones != null && !this.mediciones.isEmpty()){

@@ -24,6 +24,12 @@ public class Medicion {
         this.anomala=anomala;
     }
 
+    public Medicion(double milimetros,LocalDateTime fechaHora, boolean anomala){
+        this.milimetros=milimetros;
+        this.fechaHora=fechaHora;
+        this.anomala=anomala;
+    }
+
     //getters y setters
 
     public int getIdMedicion() {
@@ -126,6 +132,7 @@ public class Alerta {
     }
 
     public boolean requiereEquipo(){
+
     }
     
     //getters y setters
@@ -181,8 +188,32 @@ public class Alerta {
         return equipoRespuesta;
     }
 
-    public setEquipoRespuesta(EquipoRespuesta equipoRespuesta){
+    public void setEquipoRespuesta(EquipoRespuesta equipoRespuesta){
         this.equipoRespuesta = equipoRespuesta;
+    }
+}
+
+
+========================================
+--- ARCHIVO: ./Meteorologia/LecturaInvalidaException.java ---
+========================================
+
+package Meteorologia;
+
+public class LecturaInvalidaException  extends RuntimeException{
+
+    //constructor
+    public LecturaInvalidaException(){
+        super();
+    }
+    public LecturaInvalidaException(String mensaje){
+        super(mensaje);
+    }
+    public LecturaInvalidaException(String mensaje,Throwable causa){
+        super(mensaje,causa);
+    }
+    public LecturaInvalidaException(Throwable causa){
+        super(causa);
     }
 }
 
@@ -298,7 +329,7 @@ public class EstacionMeteorologica {
         return zona;
     }
 
-    public void setZonza(ZonaGeografica zona){
+    public void setZona(ZonaGeografica zona){
         this.zona = zona;
     }
 
@@ -310,7 +341,7 @@ public class EstacionMeteorologica {
 
     }
     public boolean estaOperativa(){
-
+        return this.estado == EstadoOperativo.OPERATIVO;
     }
 
 }
@@ -321,7 +352,10 @@ public class EstacionMeteorologica {
 ========================================
 
 package Meteorologia;
+import java.time.LocalDateTime;
 import java.util.List;
+import static java.util.Locale.filter;
+
 public class ZonaGeografica {
     //atributos
     private int idZona;
@@ -331,9 +365,12 @@ public class ZonaGeografica {
     private List<EstacionMeteorologica> estaciones;
     private List<ValorHistorico> valoresHistoricos;
     private List<Alerta> alertas;
+    private double umbralAmarilla;
+    private double umbralNaranja;
+    private double umbralRoja;
 
     //constructor
-    public ZonaGeografica(int idZona,String nombre,NivelVulnerabilidad nivelVunerabilidad,NivelAlerta nivelAlertaActual,List<EstacionMeteorologica> estaciones,List<Alerta> alertas,List<ValorHistorico> valoresHistoricos){
+    public ZonaGeografica(int idZona,String nombre,NivelVulnerabilidad nivelVunerabilidad,NivelAlerta nivelAlertaActual,List<EstacionMeteorologica> estaciones,List<Alerta> alertas,List<ValorHistorico> valoresHistoricos,double umbralAmarilla,double umbralNaranja,double umbralRoja){
         this.idZona=idZona;
         this.nombre=nombre;
         this.nivelVulnerabilidad=nivelVunerabilidad;
@@ -341,6 +378,9 @@ public class ZonaGeografica {
         this.estaciones=estaciones;
         this.valoresHistoricos=valoresHistoricos;
         this.alertas=alertas;
+        this.umbralAmarilla=umbralAmarilla;
+        this.umbralNaranja=umbralNaranja;
+        this.umbralRoja=umbralRoja;
     }
     //getters y setters
     public int getIdZona() {
@@ -363,7 +403,7 @@ public class ZonaGeografica {
     }
 
     public void setNivelVulnerabilidad(NivelVulnerabilidad nivelVulnerabilidad) {
-        nivelVulnerabilidad = nivelVulnerabilidad;
+        this.nivelVulnerabilidad = nivelVulnerabilidad;
     }
 
     public NivelAlerta getNivelAlerta() {
@@ -399,16 +439,54 @@ public class ZonaGeografica {
         this.alertas = alertas;
     }
 
+    public double getUmbralAmarilla() {return umbralAmarilla;}
+
+    public void setUmbralAmarilla(double umbralAmarilla) {this.umbralAmarilla = umbralAmarilla;}
+
+    public double getUmbralNaranja() {return umbralNaranja;}
+
+    public void setUmbralNaranja(double umbralNaranja) {this.umbralNaranja = umbralNaranja;}
+
+    public double getUmbralRoja() {return umbralRoja;}
+
+    public void setUmbralRoja(double umbralRoja) {this.umbralRoja = umbralRoja;}
+
     //metodos
     public double lluviaAcumulada24h(){
+        if(estaciones == null  || estaciones.isEmpty()){
+            return 0.0;
+        }
+        LocalDateTime limite24h = LocalDateTime.now().minusHours(24);
+        double totalAcumulado =0.0;
 
+        for (EstacionMeteorologica estacion : estaciones){
+            if(estacion.estaOperativa()){
+                for(Sensor sensor : estacion.getSensores()){
+                    for (Medicion medicion : sensor.getMediciones()){
+                        if(medicion.getFechaHora().isAfter(limite24h)){
+                            totalAcumulado += medicion.getMilimetros();
+                        }
+                    }
+                }
+            }
+        }
+        return totalAcumulado;
     }
 
     public NivelAlerta evaluarRiesgo(){
-
+        double acumulada = this.lluviaAcumulada24h();
+        if(acumulada >= this.umbralRoja){
+            return NivelAlerta.ROJA;
+        } else if ( acumulada >= this.umbralNaranja) {
+            return NivelAlerta.NARANJA;
+        } else if (acumulada >= this.umbralAmarilla) {
+            return NivelAlerta.AMARILLA;
+        } else {
+            return NivelAlerta.VERDE;
+        }
     }
     public Alerta emitirAlerta(TipoEventoClimatico ev){
-
+        return null;
     }
 }
 
@@ -578,7 +656,7 @@ public abstract class Persona {
     }
     //metodo
     public String getNombreCompleto(){
-
+        return this.nombre + " " + this.apellido;
     }
 }
 
@@ -717,6 +795,7 @@ public class ResponsableTecnico extends Persona{
         this.numeroLicencia=numeroLicencia;
         this.estacionesACargo = estacionesACargo;
         this.mantenimientosRealizados = mantenimientosRealizados;
+        this.equipoRespuesta = equipoRespuesta;
     }
     
     //getters y  setters
@@ -748,7 +827,7 @@ public class ResponsableTecnico extends Persona{
         return mantenimientosRealizados;
     }
 
-    public void setMantimientosRealizados(List<Mantenimiento> mantenimientosRealizados){
+    public void setMantenimientosRealizados(List<Mantenimiento> mantenimientosRealizados){
         this.mantenimientosRealizados = mantenimientosRealizados;
     }
 
@@ -794,7 +873,7 @@ public class Sensor {
     private List<Medicion> mediciones;
 
     //constructor
-    public Sensor(int idSensor, String marca, String modelo, double precision, EstadoOperativo estado, LocalDate ultimaCalibracion,List<Medicion> mediciones) {
+    public Sensor(int idSensor, String marca, String modelo, double precision, EstadoOperativo estado, LocalDate ultimaCalibracion,List<Medicion> mediciones,Boolean esAnomala) {
         this.idSensor = idSensor;
         this.marca = marca;
         this.modelo = modelo;
@@ -802,19 +881,7 @@ public class Sensor {
         this.estado = estado;
         this.ultimaCalibracion = ultimaCalibracion;
         this.mediciones=mediciones;
-    }
 
-    //metodos
-    public Medicion registrar( double  mm , LocalDateTime fh){
-    
-    }
-
-    public boolean validar(double mm){
-        
-    }
-
-    public boolean requiereCalibracion(){
-    
     }
 
     //getters y setters
@@ -871,6 +938,37 @@ public class Sensor {
 
     public void setMediciones(List<Medicion> mediciones) {
         this.mediciones = mediciones;
+    }
+
+
+
+    //metoodos
+    public void validar(double mm){
+        if(mm < 0 || mm > 500 ){
+            throw new LecturaInvalidaException("Error: la lectura de " + mm + "mm esta fuera de rango permitido (0 - 500 mm)");
+        }
+    }
+
+    public boolean requiereCalibracion(){
+        if(this.ultimaCalibracion == null){
+            return true;
+        }
+        LocalDate fechaLimite = this.ultimaCalibracion.plusMonths(12);
+        return LocalDate.now().isAfter(fechaLimite);
+    }
+
+    public void registrar(double mm,LocalDateTime fh){
+        validar(mm);
+        boolean anomala =false;
+        if(this.mediciones != null && !this.mediciones.isEmpty()){
+            Medicion ultimaMedicion=this.mediciones.get(this.mediciones.size()-1);
+            double diferencia = Math.abs(mm - ultimaMedicion.getMilimetros());
+            if (diferencia > 100.0){
+                anomala= true;
+            }
+        }
+        Medicion nuevaMedicion = new Medicion(mm, fh ,anomala);
+        this.mediciones.add(nuevaMedicion);
     }
 }
 

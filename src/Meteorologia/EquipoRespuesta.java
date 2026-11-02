@@ -1,5 +1,7 @@
 package Meteorologia;
 import java.util.List;
+import java.util.ArrayList;
+
 public class EquipoRespuesta {
     //Atributos
     private int idEquipo;
@@ -12,7 +14,7 @@ public class EquipoRespuesta {
         this.idEquipo=idEquipo;
         this.nombreEquipo=nombreEquipo;
         this.disponible=disponible;
-        this.integrantes=integrantes;
+        this.integrantes = (integrantes != null) ? integrantes : new ArrayList<>();
     }
 
     //getters y setters
@@ -51,6 +53,9 @@ public class EquipoRespuesta {
 
     //metodo
     public void agregarIntegrante(ResponsableTecnico r){
-
+        if (r != null && !this.integrantes.contains(r)) {
+            this.integrantes.add(r);
+            r.setEquipoRespuesta(this);
+        }
     }
 }
