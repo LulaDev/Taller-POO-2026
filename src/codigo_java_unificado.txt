@@ -1,0 +1,888 @@
+
+
+========================================
+--- ARCHIVO: ./Meteorologia/Medicion.java ---
+========================================
+
+package Meteorologia;
+
+import java.time.LocalDateTime;
+
+public class Medicion {
+    //atributos
+    private int idMedicion;
+    private LocalDateTime fechaHora;
+    private double milimetros;
+    private boolean anomala;
+
+
+    //constructor
+    public Medicion(int idMedicion,LocalDateTime fechaHora,double milimetros,boolean anomala){
+        this.idMedicion=idMedicion;
+        this.fechaHora=fechaHora;
+        this.milimetros=milimetros;
+        this.anomala=anomala;
+    }
+
+    //getters y setters
+
+    public int getIdMedicion() {
+        return idMedicion;
+    }
+
+    public void setIdMedicion(int idMedicion) {
+        this.idMedicion = idMedicion;
+    }
+
+
+    public LocalDateTime getFechaHora() {
+        return fechaHora;
+    }
+
+    public void setFechaHora(LocalDateTime fechaHora) {
+        this.fechaHora = fechaHora;
+    }
+
+
+    public double getMilimetros() {
+        return milimetros;
+    }
+
+    public void setMilimetros(double milimetros) {
+        this.milimetros = milimetros;
+    }
+
+
+    public boolean isAnomala() {
+        return anomala;
+    }
+
+    public void setAnomala(boolean anomala) {
+        this.anomala = anomala;
+    }
+
+
+}
+
+
+========================================
+--- ARCHIVO: ./Meteorologia/NivelAlerta.java ---
+========================================
+
+package Meteorologia;
+
+public enum NivelAlerta {
+    VERDE,
+    AMARILLA,
+    NARANJA,
+    ROJA;
+}
+
+
+========================================
+--- ARCHIVO: ./Meteorologia/NivelVulnerabilidad.java ---
+========================================
+
+package Meteorologia;
+
+public enum NivelVulnerabilidad {
+    BAJO,
+    MEDIO,
+    ALTO,
+    MUY_ALTO;
+}
+
+
+========================================
+--- ARCHIVO: ./Meteorologia/Alerta.java ---
+========================================
+
+package Meteorologia;
+import java.time.LocalDateTime;
+
+public class Alerta {
+    //atributos
+    private int idAlerta;
+    private LocalDateTime fechaHoraEmision;
+    private NivelAlerta nivel;
+    private TipoEventoClimatico evento;
+    private String descripcion;
+    private boolean atendida;
+    private EquipoRespuesta equipoRespuesta;
+
+    //constructor
+    public Alerta(int idAlerta, LocalDateTime fechaHoraEmision, NivelAlerta nivel, TipoEventoClimatico evento, String descripcion, boolean atendida, EquipoRespuesta equipoRespuesta){
+        this.idAlerta = idAlerta;
+        this.fechaHoraEmision = fechaHoraEmision;
+        this.nivel = nivel;
+        this.evento = evento;
+        this.descripcion = descripcion;
+        this.atendida = atendida;
+        this.equipoRespuesta = equipoRespuesta;
+    }
+
+    //metodos
+    public void asignarEquipo(EquipoRespuesta e){
+    }
+
+    public boolean requiereEquipo(){
+    }
+    
+    //getters y setters
+    public int getIdAlerta() {
+        return idAlerta;
+    }
+
+    public void setIdAlerta(int idAlerta) {
+        this.idAlerta = idAlerta;
+    }
+
+    public LocalDateTime getFechaHoraEmision() {
+        return fechaHoraEmision;
+    }
+
+    public void setFechaHoraEmision(LocalDateTime fechaHoraEmision) {
+        this.fechaHoraEmision = fechaHoraEmision;
+    }
+
+    public NivelAlerta getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(NivelAlerta nivel) {
+        this.nivel = nivel;
+    }
+
+    public TipoEventoClimatico getEvento() {
+        return evento;
+    }
+
+    public void setEvento(TipoEventoClimatico evento) {
+        this.evento = evento;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public boolean isAtendida() {
+        return atendida;
+    }
+
+    public void setAtendida(boolean atendida) {
+        this.atendida = atendida;
+    }
+
+    public EquipoRespuesta getEquipoRespuesta(){
+        return equipoRespuesta;
+    }
+
+    public setEquipoRespuesta(EquipoRespuesta equipoRespuesta){
+        this.equipoRespuesta = equipoRespuesta;
+    }
+}
+
+
+========================================
+--- ARCHIVO: ./Meteorologia/EstacionMeteorologica.java ---
+========================================
+
+package Meteorologia;
+import java.util.List;
+
+public class EstacionMeteorologica {
+    //atributos
+    private int idEstacion;
+    private String nombre;
+    private double latitud;
+    private double longitud;
+    private double altitud;
+    private EstadoOperativo estado;
+    private TipoEstacion tipo;
+    private List<Sensor> sensores;
+    private ResponsableTecnico responsableTecnico;
+    private ZonaGeografica zona;
+
+    //constructor
+    public EstacionMeteorologica(int idEstacion, String nombre, double latitud, double longitud, double altitud, EstadoOperativo estado, TipoEstacion tipo, List<Sensor> sensores, ResponsableTecnico responsableTecnico, ZonaGeografica zona){
+        this.idEstacion=idEstacion;
+        this.nombre=nombre;
+        this.latitud=latitud;
+        this.longitud=longitud;
+        this.altitud=altitud;
+        this.estado=estado;
+        this.tipo=tipo;
+        this.sensores = sensores;
+        this.responsableTecnico = responsableTecnico;
+        this.zona = zona;
+    }
+    //getters y setters
+
+    public int getIdEstacion() {
+        return idEstacion;
+    }
+
+    public void setIdEstacion(int idEstacion) {
+        this.idEstacion = idEstacion;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
+    }
+
+    public double getAltitud() {
+        return altitud;
+    }
+
+    public void setAltitud(double altitud) {
+        this.altitud = altitud;
+    }
+
+    public EstadoOperativo getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoOperativo estado) {
+        this.estado = estado;
+    }
+
+    public TipoEstacion getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoEstacion tipo) {
+        this.tipo = tipo;
+    }
+
+    public List<Sensor> getSensores() {
+        return sensores;
+    }
+
+    public void setSensores(List<Sensor> sensores){
+        this.sensores = sensores;
+    }
+
+    public ResponsableTecnico getResponsableTecnico() {
+        return responsableTecnico;
+    }
+
+    public void setResponsableTecnico(ResponsableTecnico responsableTecnico) {
+        this.responsableTecnico = responsableTecnico;
+    }
+
+    public ZonaGeografica getZona() {
+        return zona;
+    }
+
+    public void setZonza(ZonaGeografica zona){
+        this.zona = zona;
+    }
+
+    //metodos
+    public void instalarSensor(Sensor s){
+
+    }
+    public void retirarSensor(Sensor s){
+
+    }
+    public boolean estaOperativa(){
+
+    }
+
+}
+
+
+========================================
+--- ARCHIVO: ./Meteorologia/ZonaGeografica.java ---
+========================================
+
+package Meteorologia;
+import java.util.List;
+public class ZonaGeografica {
+    //atributos
+    private int idZona;
+    private String nombre;
+    private NivelVulnerabilidad nivelVulnerabilidad;
+    private NivelAlerta nivelAlertaActual ;
+    private List<EstacionMeteorologica> estaciones;
+    private List<ValorHistorico> valoresHistoricos;
+    private List<Alerta> alertas;
+
+    //constructor
+    public ZonaGeografica(int idZona,String nombre,NivelVulnerabilidad nivelVunerabilidad,NivelAlerta nivelAlertaActual,List<EstacionMeteorologica> estaciones,List<Alerta> alertas,List<ValorHistorico> valoresHistoricos){
+        this.idZona=idZona;
+        this.nombre=nombre;
+        this.nivelVulnerabilidad=nivelVunerabilidad;
+        this.nivelAlertaActual=nivelAlertaActual;
+        this.estaciones=estaciones;
+        this.valoresHistoricos=valoresHistoricos;
+        this.alertas=alertas;
+    }
+    //getters y setters
+    public int getIdZona() {
+        return idZona;
+    }
+
+    public void setIdZona(int idZona) {
+        this.idZona = idZona;
+    }
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public NivelVulnerabilidad getNivelVulnerabilidad() {
+        return nivelVulnerabilidad;
+    }
+
+    public void setNivelVulnerabilidad(NivelVulnerabilidad nivelVulnerabilidad) {
+        nivelVulnerabilidad = nivelVulnerabilidad;
+    }
+
+    public NivelAlerta getNivelAlerta() {
+        return nivelAlertaActual;
+    }
+
+    public void setNivelAlertaActual(NivelAlerta nivelAlertaActual) {
+
+        this.nivelAlertaActual = nivelAlertaActual;
+    }
+
+    public List<EstacionMeteorologica> getEstaciones() {
+        return estaciones;
+    }
+
+    public void setEstaciones(List<EstacionMeteorologica> estaciones) {
+        this.estaciones = estaciones;
+    }
+
+    public List<ValorHistorico> getValoresHistoricos() {
+        return valoresHistoricos;
+    }
+
+    public void setValoresHistoricos(List<ValorHistorico> valoresHistoricos) {
+     this.valoresHistoricos = valoresHistoricos;
+    }
+
+    public List<Alerta> getAlertas() {
+        return alertas;
+    }
+
+    public void setAlertas(List<Alerta> alertas) {
+        this.alertas = alertas;
+    }
+
+    //metodos
+    public double lluviaAcumulada24h(){
+
+    }
+
+    public NivelAlerta evaluarRiesgo(){
+
+    }
+    public Alerta emitirAlerta(TipoEventoClimatico ev){
+
+    }
+}
+
+
+========================================
+--- ARCHIVO: ./Meteorologia/TipoEstacion.java ---
+========================================
+
+package Meteorologia;
+
+public enum TipoEstacion {
+    AUTOMATICA,
+    CONVENCIONAL;
+}
+
+
+========================================
+--- ARCHIVO: ./Meteorologia/Mantenimiento.java ---
+========================================
+
+package Meteorologia;
+
+import java.time.LocalDate;
+
+public class Mantenimiento {
+    //Atributos
+    private int idMantenimiento;
+    private LocalDate fecha;
+    private TipoMantenimiento tipo;
+    private String descripcion;
+    private EstacionMeteorologica estacion;
+    private Sensor sensor;
+    private ResponsableTecnico responsable;
+
+
+    //Constructor
+    public Mantenimiento(int idMantenimiento,LocalDate fecha,TipoMantenimiento tipo,String descripcion,EstacionMeteorologica estacion,Sensor sensor,ResponsableTecnico responsable){
+        this.idMantenimiento=idMantenimiento;
+        this.fecha=fecha;
+        this.tipo=tipo;
+        this.descripcion=descripcion;
+        this.estacion=estacion;
+        this.sensor=sensor;
+        this.responsable=responsable;
+    }
+
+    //getters y setters
+
+    public int getIdMantenimiento() {
+        return idMantenimiento;
+    }
+
+    public void setIdMantenimiento(int idMantenimiento) {
+        this.idMantenimiento = idMantenimiento;
+    }
+
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+
+    public TipoMantenimiento getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoMantenimiento tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public EstacionMeteorologica getEstacion() {
+        return estacion;
+    }
+
+    public void setEstacion(EstacionMeteorologica estacion) {
+        this.estacion = estacion;
+    }
+
+    public Sensor getSensor() {
+        return sensor;
+    }
+
+    public void setSensor(Sensor sensor) {
+        this.sensor = sensor;
+    }
+
+    public ResponsableTecnico getResponsable() {
+        return responsable;
+    }
+
+    public void setResponsable(ResponsableTecnico responsable) {
+        this.responsable = responsable;
+    }
+}
+
+
+========================================
+--- ARCHIVO: ./Meteorologia/Persona.java ---
+========================================
+
+package Meteorologia;
+
+public abstract class Persona {
+    //Atributos
+    protected int dni;
+    protected String nombre;
+    protected String apellido;
+    protected String correoElectronico;
+    protected String celular;
+    //constructor
+    public Persona(int dni,String nombre,String apellido,String correoElectronico,String celular){
+        this.dni=dni;
+        this.nombre=nombre;
+        this.apellido=apellido;
+        this.correoElectronico=correoElectronico;
+        this.celular=celular;
+    }
+    //getters y setters
+    public int getDni() {
+        return dni;
+    }
+
+    public void setDni(int dni) {
+        this.dni = dni;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getCorreoElectronico() {
+        return correoElectronico;
+    }
+
+    public void setCorreoElectronico(String correoElectronico) {
+        this.correoElectronico = correoElectronico;
+    }
+
+    public String getCelular() {
+        return celular;
+    }
+
+    public void setCelular(String celular) {
+        this.celular = celular;
+    }
+    //metodo
+    public String getNombreCompleto(){
+
+    }
+}
+
+
+========================================
+--- ARCHIVO: ./Meteorologia/EquipoRespuesta.java ---
+========================================
+
+package Meteorologia;
+import java.util.List;
+public class EquipoRespuesta {
+    //Atributos
+    private int idEquipo;
+    private String nombreEquipo;
+    private boolean disponible;
+    private List<ResponsableTecnico> integrantes;
+
+    //Constructor
+    public EquipoRespuesta(int idEquipo,String nombreEquipo,boolean disponible,List<ResponsableTecnico> integrantes){
+        this.idEquipo=idEquipo;
+        this.nombreEquipo=nombreEquipo;
+        this.disponible=disponible;
+        this.integrantes=integrantes;
+    }
+
+    //getters y setters
+
+    public int getIdEquipo() {
+        return idEquipo;
+    }
+
+    public void setIdEquipo(int idEquipo) {
+        this.idEquipo = idEquipo;
+    }
+
+    public String getNombreEquipo() {
+        return nombreEquipo;
+    }
+
+    public void setNombreEquipo(String nombreEquipo) {
+        this.nombreEquipo = nombreEquipo;
+    }
+
+    public boolean isDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
+    }
+
+    public List<ResponsableTecnico> getIntegrantes() {
+        return integrantes;
+    }
+
+    public void setIntegrantes(List<ResponsableTecnico> integrantes) {
+        this.integrantes = integrantes;
+    }
+
+    //metodo
+    public void agregarIntegrante(ResponsableTecnico r){
+
+    }
+}
+
+
+========================================
+--- ARCHIVO: ./Meteorologia/TipoMantenimiento.java ---
+========================================
+
+package Meteorologia;
+
+public enum TipoMantenimiento {
+    PREVENTIVO,
+    CORRECTIVO,
+    CALIBRACION;
+}
+
+
+========================================
+--- ARCHIVO: ./Meteorologia/ValorHistorico.java ---
+========================================
+
+package Meteorologia;
+
+public class ValorHistorico {
+    //atributos
+    private int mes;
+    private double acumuladoMedio;
+
+    //constructor
+    public ValorHistorico(int mes,double acumuladoMedio){
+        this.mes=mes;
+        this.acumuladoMedio=acumuladoMedio;
+    }
+
+    //getters y setters
+
+    public int getMes() {
+        return mes;
+    }
+
+    public void setMes(int mes) {
+        this.mes = mes;
+    }
+
+    public double getAcumuladoMedio() {
+        return acumuladoMedio;
+    }
+
+    public void setAcumuladoMedio(double acumuladoMedio) {
+        this.acumuladoMedio = acumuladoMedio;
+    }
+}
+
+
+========================================
+--- ARCHIVO: ./Meteorologia/ResponsableTecnico.java ---
+========================================
+
+package Meteorologia;
+import java.util.List;
+
+public class ResponsableTecnico extends Persona{
+    //atributos
+    private String especialidad;
+    private String numeroLicencia;
+    private List<EstacionMeteorologica> estacionesACargo;
+    private List<Mantenimiento> mantenimientosRealizados;
+    private EquipoRespuesta equipoRespuesta;
+
+    //constructor
+    public ResponsableTecnico(int dni, String nombre, String apellido, String correoElectronico, String celular, String especialidad, String numeroLicencia, List<EstacionMeteorologica> estacionesACargo, List<Mantenimiento> mantenimientosRealizados, EquipoRespuesta equipoRespuesta){
+        super(dni, nombre, apellido, correoElectronico, celular);
+        this.especialidad=especialidad;
+        this.numeroLicencia=numeroLicencia;
+        this.estacionesACargo = estacionesACargo;
+        this.mantenimientosRealizados = mantenimientosRealizados;
+    }
+    
+    //getters y  setters
+    public String getEspecialidad() {
+        return especialidad;
+    }
+
+    public void setEspecialidad(String especialidad) {
+        this.especialidad = especialidad;
+    }
+
+    public String getNumeroLicencia() {
+        return numeroLicencia;
+    }
+
+    public void setNumeroLicencia(String numeroLicencia) {
+        this.numeroLicencia = numeroLicencia;
+    }
+
+    public List<EstacionMeteorologica> getEstacionesACargo(){
+        return estacionesACargo;
+    }
+
+    public void setEstacionesACargo(List<EstacionMeteorologica> estacionesACargo){
+        this.estacionesACargo = estacionesACargo;
+    }
+
+    public List<Mantenimiento> getMantenimientosRealizados(){
+        return mantenimientosRealizados;
+    }
+
+    public void setMantimientosRealizados(List<Mantenimiento> mantenimientosRealizados){
+        this.mantenimientosRealizados = mantenimientosRealizados;
+    }
+
+    public EquipoRespuesta getEquipoRespuesta(){
+        return equipoRespuesta;
+    }
+
+    public void setEquipoRespuesta(EquipoRespuesta equipoRespuesta){
+        this.equipoRespuesta = equipoRespuesta;
+    }
+}
+
+
+========================================
+--- ARCHIVO: ./Meteorologia/EstadoOperativo.java ---
+========================================
+
+package Meteorologia;
+
+public enum EstadoOperativo {
+    OPERATIVO,
+    EN_MANTENIMIENTO,
+    FUERA_DE_SERVICIO;
+}
+
+
+========================================
+--- ARCHIVO: ./Meteorologia/Sensor.java ---
+========================================
+
+package Meteorologia;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+public class Sensor {
+    private int idSensor;
+    private String marca;
+    private String modelo;
+    private double precision;
+    private EstadoOperativo estado;
+    private LocalDate ultimaCalibracion;
+    private List<Medicion> mediciones;
+
+    //constructor
+    public Sensor(int idSensor, String marca, String modelo, double precision, EstadoOperativo estado, LocalDate ultimaCalibracion,List<Medicion> mediciones) {
+        this.idSensor = idSensor;
+        this.marca = marca;
+        this.modelo = modelo;
+        this.precision = precision;
+        this.estado = estado;
+        this.ultimaCalibracion = ultimaCalibracion;
+        this.mediciones=mediciones;
+    }
+
+    //metodos
+    public Medicion registrar( double  mm , LocalDateTime fh){
+    
+    }
+
+    public boolean validar(double mm){
+        
+    }
+
+    public boolean requiereCalibracion(){
+    
+    }
+
+    //getters y setters
+    public int getIdSensor() {
+        return idSensor;
+    }
+
+    public void setIdSensor(int idSensor) {
+        this.idSensor = idSensor;
+    }
+    
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+    
+    public String getModelo() {
+        return modelo;
+    }
+    
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public double getPrecision() {
+        return precision;
+    }
+    
+    public void setPrecision(double precision) {
+        this.precision = precision;
+    }
+
+    public EstadoOperativo getEstado() {
+        return estado;
+    }
+    
+    public void setEstado(EstadoOperativo estado) {
+        this.estado = estado;
+    }
+
+    public LocalDate getUltimaCalibracion() {
+        return ultimaCalibracion;
+    }
+
+    public void setUltimaCalibracion(LocalDate ultimaCalibracion) {
+        this.ultimaCalibracion = ultimaCalibracion;
+    }
+    public List<Medicion> getMediciones() {
+        return mediciones;
+    }
+
+    public void setMediciones(List<Medicion> mediciones) {
+        this.mediciones = mediciones;
+    }
+}
+
+
+========================================
+--- ARCHIVO: ./Meteorologia/TipoEventoClimatico.java ---
+========================================
+
+package Meteorologia;
+
+public enum TipoEventoClimatico {
+    LLUVIA_COPIOSA,
+    CRECIDA_RIO,
+    TORMENTA_SEVERA;
+}

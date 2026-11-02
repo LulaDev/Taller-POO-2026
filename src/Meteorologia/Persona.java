@@ -57,6 +57,6 @@ public abstract class Persona {
     }
     //metodo
     public String getNombreCompleto(){
-
+        return this.nombre + " " + this.apellido;
     }
 }

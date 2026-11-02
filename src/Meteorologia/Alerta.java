@@ -24,9 +24,11 @@ public class Alerta {
 
     //metodos
     public void asignarEquipo(EquipoRespuesta e){
+        
     }
 
     public boolean requiereEquipo(){
+        return this.nivel == NivelAlerta.NARANJA || this.nivel == NivelAlerta.ROJA;
     }
     
     //getters y setters
@@ -82,7 +84,7 @@ public class Alerta {
         return equipoRespuesta;
     }
 
-    public setEquipoRespuesta(EquipoRespuesta equipoRespuesta){
+    public void setEquipoRespuesta(EquipoRespuesta equipoRespuesta){
         this.equipoRespuesta = equipoRespuesta;
     }
 }

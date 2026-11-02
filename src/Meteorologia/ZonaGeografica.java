@@ -41,7 +41,7 @@ public class ZonaGeografica {
     }
 
     public void setNivelVulnerabilidad(NivelVulnerabilidad nivelVulnerabilidad) {
-        nivelVulnerabilidad = nivelVulnerabilidad;
+        this.nivelVulnerabilidad = nivelVulnerabilidad;
     }
 
     public NivelAlerta getNivelAlerta() {
@@ -79,13 +79,13 @@ public class ZonaGeografica {
 
     //metodos
     public double lluviaAcumulada24h(){
-
+        return 0
     }
 
     public NivelAlerta evaluarRiesgo(){
-
+        return null;
     }
     public Alerta emitirAlerta(TipoEventoClimatico ev){
-
+        return null;
     }
 }

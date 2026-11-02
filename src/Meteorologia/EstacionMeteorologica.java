@@ -105,7 +105,7 @@ public class EstacionMeteorologica {
         return zona;
     }
 
-    public void setZonza(ZonaGeografica zona){
+    public void setZona(ZonaGeografica zona){
         this.zona = zona;
     }
 
@@ -117,7 +117,7 @@ public class EstacionMeteorologica {
 
     }
     public boolean estaOperativa(){
-
+        return this.estado == EstadoOperativo.OPERATIVO;
     }
 
 }
