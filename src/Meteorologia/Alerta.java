@@ -27,6 +27,7 @@ public class Alerta {
     }
 
     public boolean requiereEquipo(){
+
     }
     
     //getters y setters
@@ -82,7 +83,7 @@ public class Alerta {
         return equipoRespuesta;
     }
 
-    public setEquipoRespuesta(EquipoRespuesta equipoRespuesta){
+    public void setEquipoRespuesta(EquipoRespuesta equipoRespuesta){
         this.equipoRespuesta = equipoRespuesta;
     }
 }
