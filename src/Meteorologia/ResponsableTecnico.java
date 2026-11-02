@@ -16,6 +16,7 @@ public class ResponsableTecnico extends Persona{
         this.numeroLicencia=numeroLicencia;
         this.estacionesACargo = estacionesACargo;
         this.mantenimientosRealizados = mantenimientosRealizados;
+        this.equipoRespuesta = equipoRespuesta;
     }
     
     //getters y  setters
@@ -47,7 +48,7 @@ public class ResponsableTecnico extends Persona{
         return mantenimientosRealizados;
     }
 
-    public void setMantimientosRealizados(List<Mantenimiento> mantenimientosRealizados){
+    public void setMantenimientosRealizados(List<Mantenimiento> mantenimientosRealizados){
         this.mantenimientosRealizados = mantenimientosRealizados;
     }
 
