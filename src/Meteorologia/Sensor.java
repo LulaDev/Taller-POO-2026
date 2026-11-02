@@ -24,19 +24,6 @@ public class Sensor {
 
     }
 
-    //metodos
-    public Medicion registrar( double  mm , LocalDateTime fh){
-    
-    }
-
-    public boolean validar(double mm){
-        
-    }
-
-    public boolean requiereCalibracion(){
-    
-    }
-
     //getters y setters
     public int getIdSensor() {
         return idSensor;
@@ -98,17 +85,21 @@ public class Sensor {
     //metoodos
     public void validar(double mm){
         if(mm < 0 || mm > 500 ){
-            throw new LecturaInvalidaException("Error: la lectura de " + mm + "mm esta fuera de rango permitido (0 - 500 mm)")
+            throw new LecturaInvalidaException("Error: la lectura de " + mm + "mm esta fuera de rango permitido (0 - 500 mm)");
         }
     }
+
     public boolean requiereCalibracion(){
         if(this.ultimaCalibracion == null){
             return true;
         }
-        LocalDate fechaLimite=this.ultimaCalibracion.plusMonths(12);
+        LocalDate fechaLimite = this.ultimaCalibracion.plusMonths(12);
         return LocalDate.now().isAfter(fechaLimite);
     }
-    public void registrar(double mm,LocalDate fh){
+
+    public void registrar(double mm,LocalDateTime fh){
+        validar(mm);
+        boolean anomala =false;
         if(this.mediciones != null && !this.mediciones.isEmpty()){
             Medicion ultimaMedicion=this.mediciones.get(this.mediciones.size()-1);
             double diferencia = Math.abs(mm - ultimaMedicion.getMilimetros());

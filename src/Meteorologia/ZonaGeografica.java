@@ -1,5 +1,8 @@
 package Meteorologia;
+import java.time.LocalDateTime;
 import java.util.List;
+import static java.util.Locale.filter;
+
 public class ZonaGeografica {
     //atributos
     private int idZona;
@@ -97,11 +100,37 @@ public class ZonaGeografica {
 
     //metodos
     public double lluviaAcumulada24h(){
-        return 0
+        if(estaciones == null  || estaciones.isEmpty()){
+            return 0.0;
+        }
+        LocalDateTime limite24h = LocalDateTime.now().minusHours(24);
+        double totalAcumulado =0.0;
+
+        for (EstacionMeteorologica estacion : estaciones){
+            if(estacion.estaOperativa()){
+                for(Sensor sensor : estacion.getSensores()){
+                    for (Medicion medicion : sensor.getMediciones()){
+                        if(medicion.getFechaHora().isAfter(limite24h)){
+                            totalAcumulado += medicion.getMilimetros();
+                        }
+                    }
+                }
+            }
+        }
+        return totalAcumulado;
     }
 
     public NivelAlerta evaluarRiesgo(){
-        return null;
+        double acumulada = this.lluviaAcumulada24h();
+        if(acumulada >= this.umbralRoja){
+            return NivelAlerta.ROJA;
+        } else if ( acumulada >= this.umbralNaranja) {
+            return NivelAlerta.NARANJA;
+        } else if (acumulada >= this.umbralAmarilla) {
+            return NivelAlerta.AMARILLA;
+        } else {
+            return NivelAlerta.VERDE;
+        }
     }
     public Alerta emitirAlerta(TipoEventoClimatico ev){
         return null;
