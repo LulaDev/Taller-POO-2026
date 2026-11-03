@@ -129,10 +129,14 @@ public class Alerta {
 
     //metodos
     public void asignarEquipo(EquipoRespuesta e){
+        if (e != null) {
+            this.equipoRespuesta = e;
+            this.atendida = true;
+        }
     }
 
     public boolean requiereEquipo(){
-
+        return this.nivel == NivelAlerta.NARANJA || this.nivel == NivelAlerta.ROJA;
     }
     
     //getters y setters
@@ -224,6 +228,7 @@ public class LecturaInvalidaException  extends RuntimeException{
 
 package Meteorologia;
 import java.util.List;
+import java.util.ArrayList;
 
 public class EstacionMeteorologica {
     //atributos
@@ -335,10 +340,14 @@ public class EstacionMeteorologica {
 
     //metodos
     public void instalarSensor(Sensor s){
-
+        if (s != null && !this.sensores.contains(s)) {
+            this.sensores.add(s);
+        }
     }
     public void retirarSensor(Sensor s){
-
+        if (s != null) {
+            this.sensores.remove(s);
+        }
     }
     public boolean estaOperativa(){
         return this.estado == EstadoOperativo.OPERATIVO;
@@ -354,6 +363,7 @@ public class EstacionMeteorologica {
 package Meteorologia;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.ArrayList;
 import static java.util.Locale.filter;
 
 public class ZonaGeografica {
@@ -375,9 +385,9 @@ public class ZonaGeografica {
         this.nombre=nombre;
         this.nivelVulnerabilidad=nivelVunerabilidad;
         this.nivelAlertaActual=nivelAlertaActual;
-        this.estaciones=estaciones;
-        this.valoresHistoricos=valoresHistoricos;
-        this.alertas=alertas;
+        this.estaciones = (estaciones != null) ? estaciones : new ArrayList<>();
+        this.valoresHistoricos = (valoresHistoricos != null) ? valoresHistoricos : new ArrayList<>();
+        this.alertas = (alertas != null) ? alertas : new ArrayList<>();
         this.umbralAmarilla=umbralAmarilla;
         this.umbralNaranja=umbralNaranja;
         this.umbralRoja=umbralRoja;
@@ -486,7 +496,16 @@ public class ZonaGeografica {
         }
     }
     public Alerta emitirAlerta(TipoEventoClimatico ev){
-        return null;
+        NivelAlerta nuevoNivel = evaluarRiesgo();
+        this.nivelAlertaActual = nuevoNivel;
+
+        int nuevoId = this.alertas.size() + 1;
+        String desc = "Alerta emitida automáticamente por acumulación de lluvia en 24h: " + lluviaAcumulada24h() + " mm.";
+        
+        Alerta nuevaAlerta = new Alerta(nuevoId, LocalDateTime.now(), nuevoNivel, ev, desc, false, null);
+        this.alertas.add(nuevaAlerta);
+        
+        return nuevaAlerta;
     }
 }
 
@@ -667,6 +686,8 @@ public abstract class Persona {
 
 package Meteorologia;
 import java.util.List;
+import java.util.ArrayList;
+
 public class EquipoRespuesta {
     //Atributos
     private int idEquipo;
@@ -679,7 +700,7 @@ public class EquipoRespuesta {
         this.idEquipo=idEquipo;
         this.nombreEquipo=nombreEquipo;
         this.disponible=disponible;
-        this.integrantes=integrantes;
+        this.integrantes = (integrantes != null) ? integrantes : new ArrayList<>();
     }
 
     //getters y setters
@@ -718,7 +739,10 @@ public class EquipoRespuesta {
 
     //metodo
     public void agregarIntegrante(ResponsableTecnico r){
-
+        if (r != null && !this.integrantes.contains(r)) {
+            this.integrantes.add(r);
+            r.setEquipoRespuesta(this);
+        }
     }
 }
 
@@ -863,6 +887,8 @@ package Meteorologia;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.ArrayList;
+
 public class Sensor {
     private int idSensor;
     private String marca;
@@ -873,15 +899,14 @@ public class Sensor {
     private List<Medicion> mediciones;
 
     //constructor
-    public Sensor(int idSensor, String marca, String modelo, double precision, EstadoOperativo estado, LocalDate ultimaCalibracion,List<Medicion> mediciones,Boolean esAnomala) {
+    public Sensor(int idSensor, String marca, String modelo, double precision, EstadoOperativo estado, LocalDate ultimaCalibracion,List<Medicion> mediciones) {
         this.idSensor = idSensor;
         this.marca = marca;
         this.modelo = modelo;
         this.precision = precision;
         this.estado = estado;
         this.ultimaCalibracion = ultimaCalibracion;
-        this.mediciones=mediciones;
-
+        this.mediciones = (mediciones != null) ? mediciones : new ArrayList<>();
     }
 
     //getters y setters
@@ -958,6 +983,9 @@ public class Sensor {
     }
 
     public void registrar(double mm,LocalDateTime fh){
+        if (this.estado != EstadoOperativo.OPERATIVO) {
+            throw new IllegalStateException("No se pueden registrar mediciones en un sensor que no está operativo.");
+        }
         validar(mm);
         boolean anomala =false;
         if(this.mediciones != null && !this.mediciones.isEmpty()){

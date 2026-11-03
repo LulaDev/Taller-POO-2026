@@ -133,14 +133,37 @@ public class ZonaGeografica {
             return NivelAlerta.VERDE;
         }
     }
-    public Alerta emitirAlerta(TipoEventoClimatico ev){
+    public Alerta emitirAlerta(TipoEventoClimatico ev, EquipoRespuesta equipo) {
         NivelAlerta nuevoNivel = evaluarRiesgo();
         this.nivelAlertaActual = nuevoNivel;
+
+        if ((nuevoNivel == NivelAlerta.NARANJA || nuevoNivel == NivelAlerta.ROJA) && equipo == null) {
+            throw new IllegalArgumentException("Error: Una alerta de nivel " + nuevoNivel + " requiere la asignación obligatoria de un equipo de respuesta.");
+        }
 
         int nuevoId = this.alertas.size() + 1;
         String desc = "Alerta emitida automáticamente por acumulación de lluvia en 24h: " + lluviaAcumulada24h() + " mm.";
         
-        Alerta nuevaAlerta = new Alerta(nuevoId, LocalDateTime.now(), nuevoNivel, ev, desc, false, null);
+        boolean atendida = (equipo != null);
+        Alerta nuevaAlerta = new Alerta(nuevoId, LocalDateTime.now(), nuevoNivel, ev, desc, atendida, equipo);
+        
+        this.alertas.add(nuevaAlerta);
+        return nuevaAlerta;
+    }
+
+    public Alerta registrarAlertaOperador(NivelAlerta nivel, TipoEventoClimatico evento, String descripcion, EquipoRespuesta equipo) {
+        // Regla: Alertas de nivel NARANJA o ROJA requieren asignación obligatoria de equipo
+        if ((nivel == NivelAlerta.NARANJA || nivel == NivelAlerta.ROJA) && equipo == null) {
+            throw new IllegalArgumentException("Error: Las alertas de nivel " + nivel + " registradas por operador requieren un equipo de respuesta obligatorio.");
+        }
+
+        int nuevoId = this.alertas.size() + 1;
+        boolean atendida = (equipo != null);
+        
+        Alerta nuevaAlerta = new Alerta(nuevoId, LocalDateTime.now(), nivel, evento, descripcion, atendida, equipo);
+        
+        // Se actualiza el nivel de alerta vigente de la zona y se añade a la lista
+        this.nivelAlertaActual = nivel;
         this.alertas.add(nuevaAlerta);
         
         return nuevaAlerta;
