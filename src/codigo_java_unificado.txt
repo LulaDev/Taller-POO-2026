@@ -199,6 +199,70 @@ public class Alerta {
 
 
 ========================================
+--- ARCHIVO: ./Meteorologia/SistemaMeteorologico.java ---
+========================================
+
+package Meteorologia;
+import java.util.ArrayList;
+import java.util.List;
+
+public class SistemaMeteorologico {
+    private List<ZonaGeografica> zonas;
+    private List<EstacionMeteorologica> estaciones;
+    private List<ResponsableTecnico> responsables;
+    private List<EquipoRespuesta> equipos;
+
+    public SistemaMeteorologico() {
+        this.zonas = new ArrayList<>();
+        this.estaciones = new ArrayList<>();
+        this.responsables = new ArrayList<>();
+        this.equipos = new ArrayList<>();
+    }
+
+
+        public void mostrarRankingEstaciones() {
+            System.out.println(" Ranking de estaciones por volumetria");
+
+            estaciones.stream()
+                    .sorted((e1, e2) -> {
+                        double suma1 = e1.getSensores().stream().flatMap(s -> s.getMediciones().stream()).mapToDouble(Medicion::getMilimetros).sum();
+                        double suma2 = e2.getSensores().stream().flatMap(s -> s.getMediciones().stream()).mapToDouble(Medicion::getMilimetros).sum();
+                        return Double.compare(suma2, suma1); // Mayor a menor
+                    })
+                    .forEach(e -> {
+                        double total = e.getSensores().stream().flatMap(s -> s.getMediciones().stream()).mapToDouble(Medicion::getMilimetros).sum();
+                        System.out.println("Estación: " + e.getNombre() + " | Acumulado Total: " + total + " mm");
+                    });
+        }
+
+
+        public void mostrarInformeFallasYCalibracion() {
+            System.out.println("\n--- INFORME DE FALLAS Y CALIBRACIÓN ---");
+            for (EstacionMeteorologica est : estaciones) {
+                for (Sensor sen : est.getSensores()) {
+                    if (sen.getEstado() != EstadoOperativo.OPERATIVO) {
+                        System.out.println("[FUERA DE SERVICIO / MANTENIMIENTO] Estación: " + est.getNombre() + " - Sensor ID: " + sen.getIdSensor());
+                    }
+                    if (sen.requiereCalibracion()) {
+                        System.out.println("[REQUIERE CALIBRACIÓN (>12 meses)] Estación: " + est.getNombre() + " - Sensor ID: " + sen.getIdSensor());
+                    }
+                }
+            }
+        }
+
+        // Getters
+        public void agregarZona(ZonaGeografica z) { zonas.add(z); }
+        public void agregarEstacion(EstacionMeteorologica e) { estaciones.add(e); }
+        public void agregarResponsable(ResponsableTecnico r) { responsables.add(r); }
+        public void agregarEquipo(EquipoRespuesta eq) { equipos.add(eq); }
+
+        public List<ZonaGeografica> getZonas() { return zonas; }
+        public List<EstacionMeteorologica> getEstaciones() { return estaciones; }
+    }
+
+
+
+========================================
 --- ARCHIVO: ./Meteorologia/LecturaInvalidaException.java ---
 ========================================
 
@@ -495,14 +559,37 @@ public class ZonaGeografica {
             return NivelAlerta.VERDE;
         }
     }
-    public Alerta emitirAlerta(TipoEventoClimatico ev){
+    public Alerta emitirAlerta(TipoEventoClimatico ev, EquipoRespuesta equipo) {
         NivelAlerta nuevoNivel = evaluarRiesgo();
         this.nivelAlertaActual = nuevoNivel;
+
+        if ((nuevoNivel == NivelAlerta.NARANJA || nuevoNivel == NivelAlerta.ROJA) && equipo == null) {
+            throw new IllegalArgumentException("Error: Una alerta de nivel " + nuevoNivel + " requiere la asignación obligatoria de un equipo de respuesta.");
+        }
 
         int nuevoId = this.alertas.size() + 1;
         String desc = "Alerta emitida automáticamente por acumulación de lluvia en 24h: " + lluviaAcumulada24h() + " mm.";
         
-        Alerta nuevaAlerta = new Alerta(nuevoId, LocalDateTime.now(), nuevoNivel, ev, desc, false, null);
+        boolean atendida = (equipo != null);
+        Alerta nuevaAlerta = new Alerta(nuevoId, LocalDateTime.now(), nuevoNivel, ev, desc, atendida, equipo);
+        
+        this.alertas.add(nuevaAlerta);
+        return nuevaAlerta;
+    }
+
+    public Alerta registrarAlertaOperador(NivelAlerta nivel, TipoEventoClimatico evento, String descripcion, EquipoRespuesta equipo) {
+        // Regla: Alertas de nivel NARANJA o ROJA requieren asignación obligatoria de equipo
+        if ((nivel == NivelAlerta.NARANJA || nivel == NivelAlerta.ROJA) && equipo == null) {
+            throw new IllegalArgumentException("Error: Las alertas de nivel " + nivel + " registradas por operador requieren un equipo de respuesta obligatorio.");
+        }
+
+        int nuevoId = this.alertas.size() + 1;
+        boolean atendida = (equipo != null);
+        
+        Alerta nuevaAlerta = new Alerta(nuevoId, LocalDateTime.now(), nivel, evento, descripcion, atendida, equipo);
+        
+        // Se actualiza el nivel de alerta vigente de la zona y se añade a la lista
+        this.nivelAlertaActual = nivel;
         this.alertas.add(nuevaAlerta);
         
         return nuevaAlerta;
@@ -864,6 +951,92 @@ public class ResponsableTecnico extends Persona{
     }
 }
 
+
+========================================
+--- ARCHIVO: ./Meteorologia/Main.java ---
+========================================
+
+package Meteorologia;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        SistemaMeteorologico sistema = new SistemaMeteorologico();
+        Scanner scanner = new Scanner(System.in);
+
+
+        EquipoRespuesta equipo1 = new EquipoRespuesta(1, "Equipo Alfa - Rescate Fluvial", true, new ArrayList<>());
+        ZonaGeografica zonaCentro = new ZonaGeografica(1, "Cuenca Centro", NivelVulnerabilidad.ALTO, NivelAlerta.VERDE, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 50.0, 100.0, 150.0);
+        ResponsableTecnico resp1 = new ResponsableTecnico(35123456, "Juan", "Pérez", "juan@met.com", "3454123456", "Hidrología", "LIC-9988", new ArrayList<>(), new ArrayList<>(), equipo1);
+
+        Sensor sensor1 = new Sensor(101, "PluvioTech", "A1", 0.1, EstadoOperativo.OPERATIVO, LocalDate.now().minusMonths(6), new ArrayList<>());
+        List<Sensor> sensoresEstacion = new ArrayList<>();
+        sensoresEstacion.add(sensor1);
+
+        EstacionMeteorologica estacion1 = new EstacionMeteorologica(1, "Estación Salto Grande", -31.3, -58.0, 50.0, EstadoOperativo.OPERATIVO, TipoEstacion.AUTOMATICA, sensoresEstacion, resp1, zonaCentro);
+        zonaCentro.getEstaciones().add(estacion1);
+
+        sistema.agregarZona(zonaCentro);
+        sistema.agregarEstacion(estacion1);
+        sistema.agregarResponsable(resp1);
+        sistema.agregarEquipo(equipo1);
+
+
+        int opcion = 0;
+        do {
+            System.out.println("SISTEMA DE GESTIÓN METEOROLÓGICA (EL NIÑO) ");
+            System.out.println("1. Registrar medición en sensor");
+            System.out.println("2. Evaluar riesgo y verificar alertas de Zona");
+            System.out.println("3. Ver Ranking de Estaciones por Volumetría");
+            System.out.println("4. Ver Informe de Fallas y Calibraciones");
+            System.out.println("5. Salir");
+            System.out.print("Seleccione una opción: ");
+
+            try {
+                opcion = Integer.parseInt(scanner.nextLine());
+                switch (opcion) {
+                    case 1:
+                        System.out.print("Ingrese milímetros caídos (0 - 500): ");
+                        double mm = Double.parseDouble(scanner.nextLine());
+                        sensor1.registrar(mm, LocalDateTime.now());
+                        System.out.println("¡Medición registrada con éxito!");
+                        break;
+                    case 2:
+                        NivelAlerta riesgo = zonaCentro.evaluarRiesgo();
+                        System.out.println("Lluvia acumulada 24h: " + zonaCentro.lluviaAcumulada24h() + " mm");
+                        System.out.println("Nivel de riesgo evaluado: " + riesgo);
+                        if (riesgo == NivelAlerta.NARANJA || riesgo == NivelAlerta.ROJA) {
+                            zonaCentro.emitirAlerta(TipoEventoClimatico.LLUVIA_COPIOSA, equipo1);
+                            System.out.println("¡Alerta emitida automáticamente y asignada al equipo de respuesta!");
+                        }
+                        break;
+                    case 3:
+                        sistema.mostrarRankingEstaciones();
+                        break;
+                    case 4:
+                        sistema.mostrarInformeFallasYCalibracion();
+                        break;
+                    case 5:
+                        System.out.println("Saliendo del sistema...");
+                        break;
+                    default:
+                        System.out.println("Opción inválida.");
+                }
+            } catch (LecturaInvalidaException e) {
+                System.out.println("Excepción controlada: " + e.getMessage());
+            } catch (Exception e) {
+                System.out.println("Error: Ocurrió un error inesperado: " + e.getMessage());
+            }
+        } while (opcion != 5);
+
+        scanner.close();
+    }
+}
 
 ========================================
 --- ARCHIVO: ./Meteorologia/EstadoOperativo.java ---
