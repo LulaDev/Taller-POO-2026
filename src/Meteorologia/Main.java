@@ -53,7 +53,7 @@ public class Main {
                         System.out.println("Lluvia acumulada 24h: " + zonaCentro.lluviaAcumulada24h() + " mm");
                         System.out.println("Nivel de riesgo evaluado: " + riesgo);
                         if (riesgo == NivelAlerta.NARANJA || riesgo == NivelAlerta.ROJA) {
-                            zonaCentro.emitirAlerta(TipoEventoClimatico.LLUVIA_COPIOSA);
+                            zonaCentro.emitirAlerta(TipoEventoClimatico.LLUVIA_COPIOSA, equipo1);
                             System.out.println("¡Alerta emitida automáticamente y asignada al equipo de respuesta!");
                         }
                         break;
@@ -70,9 +70,9 @@ public class Main {
                         System.out.println("Opción inválida.");
                 }
             } catch (LecturaInvalidaException e) {
-                System.out.println("[EXCEPCIÓN CONTROLADA] " + e.getMessage());
+                System.out.println("Excepción controlada: " + e.getMessage());
             } catch (Exception e) {
-                System.out.println("[ERROR] Ocurrió un error inesperado: " + e.getMessage());
+                System.out.println("Error: Ocurrió un error inesperado: " + e.getMessage());
             }
         } while (opcion != 5);
 
