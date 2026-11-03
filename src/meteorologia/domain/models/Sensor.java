@@ -1,4 +1,7 @@
-package Meteorologia;
+package meteorologia.domain.models;
+
+import meteorologia.exception.LecturaInvalidaException;
+import meteorologia.domain.enums.EstadoOperativo;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

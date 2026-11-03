@@ -1,8 +1,11 @@
-package Meteorologia;
+package meteorologia.domain.models;
+import meteorologia.domain.enums.NivelAlerta;
+import meteorologia.domain.enums.NivelVulnerabilidad;
+import meteorologia.domain.enums.TipoEventoClimatico;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
-import static java.util.Locale.filter;
 
 public class ZonaGeografica {
     //atributos
@@ -18,13 +21,13 @@ public class ZonaGeografica {
     private double umbralRoja;
 
     //constructor
-    public ZonaGeografica(int idZona,String nombre,NivelVulnerabilidad nivelVunerabilidad,NivelAlerta nivelAlertaActual,List<EstacionMeteorologica> estaciones,List<Alerta> alertas,List<ValorHistorico> valoresHistoricos,double umbralAmarilla,double umbralNaranja,double umbralRoja){
+    public ZonaGeografica(int idZona,String nombre,NivelVulnerabilidad nivelVunerabilidad,NivelAlerta nivelAlertaActual,List<EstacionMeteorologica> estaciones,List<Alerta> alertas,double umbralAmarilla,double umbralNaranja,double umbralRoja){
         this.idZona=idZona;
         this.nombre=nombre;
         this.nivelVulnerabilidad=nivelVunerabilidad;
         this.nivelAlertaActual=nivelAlertaActual;
         this.estaciones = (estaciones != null) ? estaciones : new ArrayList<>();
-        this.valoresHistoricos = (valoresHistoricos != null) ? valoresHistoricos : new ArrayList<>();
+        this.valoresHistoricos = new ArrayList<>();
         this.alertas = (alertas != null) ? alertas : new ArrayList<>();
         this.umbralAmarilla=umbralAmarilla;
         this.umbralNaranja=umbralNaranja;
@@ -100,10 +103,11 @@ public class ZonaGeografica {
     public void setUmbralRoja(double umbralRoja) {this.umbralRoja = umbralRoja;}
 
     //metodos
+    public void agregarValorHistorico(int mes, double acumuladoMedio){
+        this.valoresHistoricos.add(new ValorHistorico(mes, acumuladoMedio));
+    }
+}
     public double lluviaAcumulada24h(){
-        if(estaciones == null  || estaciones.isEmpty()){
-            return 0.0;
-        }
         LocalDateTime limite24h = LocalDateTime.now().minusHours(24);
         double totalAcumulado =0.0;
 
@@ -125,7 +129,7 @@ public class ZonaGeografica {
         double acumulada = this.lluviaAcumulada24h();
         if(acumulada >= this.umbralRoja){
             return NivelAlerta.ROJA;
-        } else if ( acumulada >= this.umbralNaranja) {
+        } else if (acumulada >= this.umbralNaranja) {
             return NivelAlerta.NARANJA;
         } else if (acumulada >= this.umbralAmarilla) {
             return NivelAlerta.AMARILLA;
@@ -133,6 +137,7 @@ public class ZonaGeografica {
             return NivelAlerta.VERDE;
         }
     }
+
     public Alerta emitirAlerta(TipoEventoClimatico ev, EquipoRespuesta equipo) {
         NivelAlerta nuevoNivel = evaluarRiesgo();
         this.nivelAlertaActual = nuevoNivel;
@@ -153,7 +158,7 @@ public class ZonaGeografica {
 
     public Alerta registrarAlertaOperador(NivelAlerta nivel, TipoEventoClimatico evento, String descripcion, EquipoRespuesta equipo) {
         // Regla: Alertas de nivel NARANJA o ROJA requieren asignación obligatoria de equipo
-        if ((nivel == NivelAlerta.NARANJA || nivel == NivelAlerta.ROJA) && equipo == null) {
+        if ((nivel == NivelAlerta{.NARANJA || nivel == NivelAlerta.ROJA) && equipo == null) {
             throw new IllegalArgumentException("Error: Las alertas de nivel " + nivel + " registradas por operador requieren un equipo de respuesta obligatorio.");
         }
 

@@ -1,4 +1,6 @@
-package Meteorologia;
+package meteorologia.domain.models;
+
+import meteorologia.domain.enums.TipoMantenimiento;
 
 import java.time.LocalDate;
 

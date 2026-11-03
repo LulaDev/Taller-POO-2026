@@ -1,4 +1,7 @@
-package Meteorologia;
+package meteorologia.domain.models;
+import meteorologia.domain.enums.NivelAlerta;
+import meteorologia.domain.enums.TipoEventoClimatico;
+
 import java.time.LocalDateTime;
 
 public class Alerta {

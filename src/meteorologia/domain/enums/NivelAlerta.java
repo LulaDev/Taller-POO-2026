@@ -1,4 +1,4 @@
-package Meteorologia;
+package meteorologia.domain.enums;
 
 public enum NivelAlerta {
     VERDE,

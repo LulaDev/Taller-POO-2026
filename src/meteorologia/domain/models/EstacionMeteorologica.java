@@ -1,6 +1,8 @@
-package Meteorologia;
+package meteorologia.domain.models;
+import meteorologia.domain.enums.EstadoOperativo;
+import meteorologia.domain.enums.TipoEstacion;
+
 import java.util.List;
-import java.util.ArrayList;
 
 public class EstacionMeteorologica {
     //atributos

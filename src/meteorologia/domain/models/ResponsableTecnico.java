@@ -1,4 +1,4 @@
-package Meteorologia;
+package meteorologia.domain.models;
 import java.util.List;
 
 public class ResponsableTecnico extends Persona{

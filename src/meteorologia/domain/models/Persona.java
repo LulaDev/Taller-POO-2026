@@ -1,4 +1,4 @@
-package Meteorologia;
+package meteorologia.domain.models;
 
 public abstract class Persona {
     //Atributos

@@ -1,4 +1,4 @@
-package Meteorologia;
+package meteorologia.exception;
 
 public class LecturaInvalidaException  extends RuntimeException{
 

@@ -1,4 +1,7 @@
-package Meteorologia;
+package meteorologia.aplication;
+import meteorologia.domain.enums.EstadoOperativo;
+import meteorologia.domain.models.*;
+
 import java.util.ArrayList;
 import java.util.List;
 

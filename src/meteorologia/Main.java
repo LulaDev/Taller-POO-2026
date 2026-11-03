@@ -1,4 +1,9 @@
-package Meteorologia;
+package meteorologia;
+
+import meteorologia.aplication.SistemaMeteorologico;
+import meteorologia.domain.enums.*;
+import meteorologia.domain.models.*;
+import meteorologia.exception.LecturaInvalidaException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
