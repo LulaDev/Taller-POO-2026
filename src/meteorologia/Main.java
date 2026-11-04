@@ -19,7 +19,7 @@ public class Main {
 
         EquipoRespuesta equipo1 = new EquipoRespuesta(1, "Equipo Alfa - Rescate Fluvial", true, new ArrayList<>());
         ZonaGeografica zonaCentro = new ZonaGeografica(1, "Cuenca Centro", NivelVulnerabilidad.ALTO, NivelAlerta.VERDE, 50.0, 100.0, 150.0);
-        ResponsableTecnico resp1 = new ResponsableTecnico(35123456, "Juan", "Pérez", "juan@met.com", "3454123456", "Hidrología", "LIC-9988", new ArrayList<>(), equipo1);
+        ResponsableTecnico resp1 = new ResponsableTecnico(35123456, "Juan", "Pérez", "juan@met.com", "3454123456", "Hidrología", "LIC-9988", equipo1);
 
         Sensor sensor1 = new Sensor(101, "PluvioTech", "A1", 0.1, EstadoOperativo.OPERATIVO, LocalDate.now().minusMonths(6));
         List<Sensor> sensoresEstacion = new ArrayList<>();

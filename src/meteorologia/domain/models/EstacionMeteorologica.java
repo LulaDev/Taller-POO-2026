@@ -110,7 +110,7 @@ public class EstacionMeteorologica {
 
     //metodos
     public void agregarMantenimiento(int idMantenimiento, LocalDate fecha, TipoMantenimiento tipo, String descripcion, Sensor sensor, ResponsableTecnico responsable){
-        this.mantenimientos.add(new Mantenimiento(idMantenimiento, fecha, tipo, descripcion, sensor, responsable));
+        this.mantenimientos.add(new Mantenimiento(idMantenimiento, fecha, tipo, descripcion, responsable));
     }
 
     public void instalarSensor(Sensor s){

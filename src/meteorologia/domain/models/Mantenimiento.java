@@ -12,17 +12,15 @@ public class Mantenimiento {
     private LocalDate fecha;
     private TipoMantenimiento tipo;
     private String descripcion;
-    private Sensor sensor;
     private ResponsableTecnico responsable;
     private List<Sensor> sensores;
 
     //Constructor
-    public Mantenimiento(int idMantenimiento,LocalDate fecha,TipoMantenimiento tipo,String descripcion,Sensor sensor,ResponsableTecnico responsable){
+    public Mantenimiento(int idMantenimiento,LocalDate fecha,TipoMantenimiento tipo,String descripcion,ResponsableTecnico responsable){
         this.idMantenimiento=idMantenimiento;
         this.fecha=fecha;
         this.tipo=tipo;
         this.descripcion=descripcion;
-        this.sensor=sensor;
         this.responsable=responsable;
         this.sensores= new ArrayList<Sensor>();
     }
@@ -59,14 +57,6 @@ public class Mantenimiento {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public Sensor getSensor() {
-        return sensor;
-    }
-
-    public void setSensor(Sensor sensor) {
-        this.sensor = sensor;
     }
 
     public ResponsableTecnico getResponsable() {

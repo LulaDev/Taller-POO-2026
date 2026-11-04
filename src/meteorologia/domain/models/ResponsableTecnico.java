@@ -11,12 +11,12 @@ public class ResponsableTecnico extends Persona{
     private EquipoRespuesta equipoRespuesta;
 
     //constructor
-    public ResponsableTecnico(int dni, String nombre, String apellido, String correoElectronico, String celular, String especialidad, String numeroLicencia, List<Mantenimiento> mantenimientosRealizados, EquipoRespuesta equipoRespuesta){
+    public ResponsableTecnico(int dni, String nombre, String apellido, String correoElectronico, String celular, String especialidad, String numeroLicencia, EquipoRespuesta equipoRespuesta){
         super(dni, nombre, apellido, correoElectronico, celular);
         this.especialidad=especialidad;
         this.numeroLicencia=numeroLicencia;
         this.estacionesACargo = new ArrayList<EstacionMeteorologica>();
-        this.mantenimientosRealizados = mantenimientosRealizados;
+        this.mantenimientosRealizados = new ArrayList<Mantenimiento>();
         this.equipoRespuesta = equipoRespuesta;
     }
     
@@ -61,8 +61,12 @@ public class ResponsableTecnico extends Persona{
         this.equipoRespuesta = equipoRespuesta;
     }
 
+
     //metodos
     public void agregarEstacionMeteorologica(EstacionMeteorologica em){
         this.estacionesACargo.add(em);
+    }
+    public void agregarMantenimiento(Mantenimiento ma){
+        this.mantenimientosRealizados.add(ma);
     }
 }
