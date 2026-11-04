@@ -2,7 +2,6 @@ package meteorologia.domain.models;
 import meteorologia.domain.enums.NivelAlerta;
 import meteorologia.domain.enums.NivelVulnerabilidad;
 import meteorologia.domain.enums.TipoEventoClimatico;
-import meteorologia.domain.models.EstacionMeteorologica;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,22 +13,22 @@ public class ZonaGeografica {
     private String nombre;
     private NivelVulnerabilidad nivelVulnerabilidad;
     private NivelAlerta nivelAlertaActual ;
-    private List<EstacionMeteorologica> estaciones;
     private List<ValorHistorico> valoresHistoricos;
+    private List<EstacionMeteorologica> estaciones;
     private List<Alerta> alertas;
     private double umbralAmarilla;
     private double umbralNaranja;
     private double umbralRoja;
 
     //constructor
-    public ZonaGeografica(int idZona,String nombre,NivelVulnerabilidad nivelVunerabilidad,NivelAlerta nivelAlertaActual,List<EstacionMeteorologica> estaciones,List<Alerta> alertas,double umbralAmarilla,double umbralNaranja,double umbralRoja){
+    public ZonaGeografica(int idZona, String nombre, NivelVulnerabilidad nivelVunerabilidad, NivelAlerta nivelAlertaActual, double umbralAmarilla, double umbralNaranja, double umbralRoja){
         this.idZona=idZona;
         this.nombre=nombre;
         this.nivelVulnerabilidad=nivelVunerabilidad;
         this.nivelAlertaActual=nivelAlertaActual;
-        this.estaciones = new ArrayList<>();
-        this.valoresHistoricos = new ArrayList<>();
-        this.alertas = (alertas != null) ? alertas : new ArrayList<>();
+        this.valoresHistoricos = new ArrayList<ValorHistorico>();
+        this.estaciones = new ArrayList<EstacionMeteorologica>();
+        this.alertas = new ArrayList<Alerta>();
         this.umbralAmarilla=umbralAmarilla;
         this.umbralNaranja=umbralNaranja;
         this.umbralRoja=umbralRoja;
@@ -42,6 +41,7 @@ public class ZonaGeografica {
     public void setIdZona(int idZona) {
         this.idZona = idZona;
     }
+
     public String getNombre() {
         return nombre;
     }
@@ -63,7 +63,6 @@ public class ZonaGeografica {
     }
 
     public void setNivelAlertaActual(NivelAlerta nivelAlertaActual) {
-
         this.nivelAlertaActual = nivelAlertaActual;
     }
 
@@ -103,9 +102,17 @@ public class ZonaGeografica {
 
     public void setUmbralRoja(double umbralRoja) {this.umbralRoja = umbralRoja;}
 
-    //metodos
+    //MÉTODOS
     public void agregarValorHistorico(int mes, double acumuladoMedio){
         this.valoresHistoricos.add(new ValorHistorico(mes, acumuladoMedio));
+    }
+
+    public void agregarEstacionMeteorologica(EstacionMeteorologica e){
+        this.estaciones.add(e);
+    }
+
+    public void agregarAlerta(Alerta a){
+        this.alertas.add(a);
     }
 
     public double lluviaAcumulada24h(){
@@ -151,7 +158,7 @@ public class ZonaGeografica {
         String desc = "Alerta emitida automáticamente por acumulación de lluvia en 24h: " + lluviaAcumulada24h() + " mm.";
         
         boolean atendida = (equipo != null);
-        Alerta nuevaAlerta = new Alerta(nuevoId, LocalDateTime.now(), nuevoNivel, ev, desc, atendida, equipo);
+        Alerta nuevaAlerta = new Alerta(nuevoId, LocalDateTime.now(), nuevoNivel, ev, desc, atendida, equipo, this);
         
         this.alertas.add(nuevaAlerta);
         return nuevaAlerta;
@@ -166,7 +173,7 @@ public class ZonaGeografica {
         int nuevoId = this.alertas.size() + 1;
         boolean atendida = (equipo != null);
         
-        Alerta nuevaAlerta = new Alerta(nuevoId, LocalDateTime.now(), nivel, evento, descripcion, atendida, equipo);
+        Alerta nuevaAlerta = new Alerta(nuevoId, LocalDateTime.now(), nivel, evento, descripcion, atendida, equipo, this);
         
         // Se actualiza el nivel de alerta vigente de la zona y se añade a la lista
         this.nivelAlertaActual = nivel;

@@ -13,9 +13,10 @@ public class Alerta {
     private String descripcion;
     private boolean atendida;
     private EquipoRespuesta equipoRespuesta;
+    private ZonaGeografica zona;
 
     //constructor
-    public Alerta(int idAlerta, LocalDateTime fechaHoraEmision, NivelAlerta nivel, TipoEventoClimatico evento, String descripcion, boolean atendida, EquipoRespuesta equipoRespuesta){
+    public Alerta(int idAlerta, LocalDateTime fechaHoraEmision, NivelAlerta nivel, TipoEventoClimatico evento, String descripcion, boolean atendida, EquipoRespuesta equipoRespuesta, ZonaGeografica zona){
         this.idAlerta = idAlerta;
         this.fechaHoraEmision = fechaHoraEmision;
         this.nivel = nivel;
@@ -23,6 +24,7 @@ public class Alerta {
         this.descripcion = descripcion;
         this.atendida = atendida;
         this.equipoRespuesta = equipoRespuesta;
+        this.zona = zona;
     }
 
     //metodos
@@ -93,4 +95,8 @@ public class Alerta {
     public void setEquipoRespuesta(EquipoRespuesta equipoRespuesta){
         this.equipoRespuesta = equipoRespuesta;
     }
+
+    public ZonaGeografica getZona() { return  zona; }
+
+    public void setZona(ZonaGeografica zona) { this.zona = zona; }
 }

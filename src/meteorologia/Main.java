@@ -18,14 +18,14 @@ public class Main {
 
 
         EquipoRespuesta equipo1 = new EquipoRespuesta(1, "Equipo Alfa - Rescate Fluvial", true, new ArrayList<>());
-        ZonaGeografica zonaCentro = new ZonaGeografica(1, "Cuenca Centro", NivelVulnerabilidad.ALTO, NivelAlerta.VERDE, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 50.0, 100.0, 150.0);
+        ZonaGeografica zonaCentro = new ZonaGeografica(1, "Cuenca Centro", NivelVulnerabilidad.ALTO, NivelAlerta.VERDE, 50.0, 100.0, 150.0);
         ResponsableTecnico resp1 = new ResponsableTecnico(35123456, "Juan", "Pérez", "juan@met.com", "3454123456", "Hidrología", "LIC-9988", new ArrayList<>(), new ArrayList<>(), equipo1);
 
         Sensor sensor1 = new Sensor(101, "PluvioTech", "A1", 0.1, EstadoOperativo.OPERATIVO, LocalDate.now().minusMonths(6), new ArrayList<>());
         List<Sensor> sensoresEstacion = new ArrayList<>();
         sensoresEstacion.add(sensor1);
 
-        EstacionMeteorologica estacion1 = new EstacionMeteorologica(1, "Estación Salto Grande", -31.3, -58.0, 50.0, EstadoOperativo.OPERATIVO, TipoEstacion.AUTOMATICA, sensoresEstacion, resp1, zonaCentro);
+        EstacionMeteorologica estacion1 = new EstacionMeteorologica(1, "Estación Salto Grande", -31.3, -58.0, 50.0, EstadoOperativo.OPERATIVO, TipoEstacion.AUTOMATICA, sensoresEstacion, resp1);
         zonaCentro.getEstaciones().add(estacion1);
 
         sistema.agregarZona(zonaCentro);

@@ -15,10 +15,9 @@ public class EstacionMeteorologica {
     private TipoEstacion tipo;
     private List<Sensor> sensores;
     private ResponsableTecnico responsableTecnico;
-    private ZonaGeografica zona;
 
     //constructor
-    public EstacionMeteorologica(int idEstacion, String nombre, double latitud, double longitud, double altitud, EstadoOperativo estado, TipoEstacion tipo, List<Sensor> sensores, ResponsableTecnico responsableTecnico, ZonaGeografica zona){
+    public EstacionMeteorologica(int idEstacion, String nombre, double latitud, double longitud, double altitud, EstadoOperativo estado, TipoEstacion tipo, List<Sensor> sensores, ResponsableTecnico responsableTecnico){
         this.idEstacion=idEstacion;
         this.nombre=nombre;
         this.latitud=latitud;
@@ -28,7 +27,6 @@ public class EstacionMeteorologica {
         this.tipo=tipo;
         this.sensores = sensores;
         this.responsableTecnico = responsableTecnico;
-        this.zona = zona;
     }
     //getters y setters
 
@@ -102,14 +100,6 @@ public class EstacionMeteorologica {
 
     public void setResponsableTecnico(ResponsableTecnico responsableTecnico) {
         this.responsableTecnico = responsableTecnico;
-    }
-
-    public ZonaGeografica getZona() {
-        return zona;
-    }
-
-    public void setZona(ZonaGeografica zona){
-        this.zona = zona;
     }
 
     //metodos
