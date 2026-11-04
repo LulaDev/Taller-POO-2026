@@ -1,5 +1,6 @@
 package meteorologia.domain.models;
 import java.util.List;
+import java.util.ArrayList;
 
 public class ResponsableTecnico extends Persona{
     //atributos
@@ -10,11 +11,11 @@ public class ResponsableTecnico extends Persona{
     private EquipoRespuesta equipoRespuesta;
 
     //constructor
-    public ResponsableTecnico(int dni, String nombre, String apellido, String correoElectronico, String celular, String especialidad, String numeroLicencia, List<EstacionMeteorologica> estacionesACargo, List<Mantenimiento> mantenimientosRealizados, EquipoRespuesta equipoRespuesta){
+    public ResponsableTecnico(int dni, String nombre, String apellido, String correoElectronico, String celular, String especialidad, String numeroLicencia, List<Mantenimiento> mantenimientosRealizados, EquipoRespuesta equipoRespuesta){
         super(dni, nombre, apellido, correoElectronico, celular);
         this.especialidad=especialidad;
         this.numeroLicencia=numeroLicencia;
-        this.estacionesACargo = estacionesACargo;
+        this.estacionesACargo = new ArrayList<EstacionMeteorologica>();
         this.mantenimientosRealizados = mantenimientosRealizados;
         this.equipoRespuesta = equipoRespuesta;
     }
@@ -58,5 +59,10 @@ public class ResponsableTecnico extends Persona{
 
     public void setEquipoRespuesta(EquipoRespuesta equipoRespuesta){
         this.equipoRespuesta = equipoRespuesta;
+    }
+
+    //metodos
+    public void agregarEstacionMeteorologica(EstacionMeteorologica em){
+        this.estacionesACargo.add(em);
     }
 }

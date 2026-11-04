@@ -10,18 +10,16 @@ public class Mantenimiento {
     private LocalDate fecha;
     private TipoMantenimiento tipo;
     private String descripcion;
-    private EstacionMeteorologica estacion;
     private Sensor sensor;
     private ResponsableTecnico responsable;
 
 
     //Constructor
-    public Mantenimiento(int idMantenimiento,LocalDate fecha,TipoMantenimiento tipo,String descripcion,EstacionMeteorologica estacion,Sensor sensor,ResponsableTecnico responsable){
+    public Mantenimiento(int idMantenimiento,LocalDate fecha,TipoMantenimiento tipo,String descripcion,Sensor sensor,ResponsableTecnico responsable){
         this.idMantenimiento=idMantenimiento;
         this.fecha=fecha;
         this.tipo=tipo;
         this.descripcion=descripcion;
-        this.estacion=estacion;
         this.sensor=sensor;
         this.responsable=responsable;
     }
@@ -58,14 +56,6 @@ public class Mantenimiento {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public EstacionMeteorologica getEstacion() {
-        return estacion;
-    }
-
-    public void setEstacion(EstacionMeteorologica estacion) {
-        this.estacion = estacion;
     }
 
     public Sensor getSensor() {

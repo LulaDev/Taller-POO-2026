@@ -1,8 +1,11 @@
 package meteorologia.domain.models;
 import meteorologia.domain.enums.EstadoOperativo;
 import meteorologia.domain.enums.TipoEstacion;
+import meteorologia.domain.enums.TipoMantenimiento;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.ArrayList;
 
 public class EstacionMeteorologica {
     //atributos
@@ -13,11 +16,12 @@ public class EstacionMeteorologica {
     private double altitud;
     private EstadoOperativo estado;
     private TipoEstacion tipo;
-    private List<Sensor> sensores;
     private ResponsableTecnico responsableTecnico;
+    private List<Mantenimiento> mantenimientos;
+    private List<Sensor> sensores;
 
     //constructor
-    public EstacionMeteorologica(int idEstacion, String nombre, double latitud, double longitud, double altitud, EstadoOperativo estado, TipoEstacion tipo, List<Sensor> sensores, ResponsableTecnico responsableTecnico){
+    public EstacionMeteorologica(int idEstacion, String nombre, double latitud, double longitud, double altitud, EstadoOperativo estado, TipoEstacion tipo, ResponsableTecnico responsableTecnico){
         this.idEstacion=idEstacion;
         this.nombre=nombre;
         this.latitud=latitud;
@@ -25,9 +29,11 @@ public class EstacionMeteorologica {
         this.altitud=altitud;
         this.estado=estado;
         this.tipo=tipo;
-        this.sensores = sensores;
         this.responsableTecnico = responsableTecnico;
+        this.mantenimientos = new ArrayList<Mantenimiento>();
+        this.sensores = new ArrayList<Sensor>();
     }
+
     //getters y setters
 
     public int getIdEstacion() {
@@ -103,8 +109,12 @@ public class EstacionMeteorologica {
     }
 
     //metodos
+    public void agregarMantenimiento(int idMantenimiento, LocalDate fecha, TipoMantenimiento tipo, String descripcion, Sensor sensor, ResponsableTecnico responsable){
+        this.mantenimientos.add(new Mantenimiento(idMantenimiento, fecha, tipo, descripcion, sensor, responsable));
+    }
+
     public void instalarSensor(Sensor s){
-        if (s != null && !this.sensores.contains(s)) {
+        if (s != null) {
             this.sensores.add(s);
         }
     }
