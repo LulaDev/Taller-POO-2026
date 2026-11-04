@@ -3,6 +3,8 @@ package meteorologia.domain.models;
 import meteorologia.domain.enums.TipoMantenimiento;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Mantenimiento {
     //Atributos
@@ -12,7 +14,7 @@ public class Mantenimiento {
     private String descripcion;
     private Sensor sensor;
     private ResponsableTecnico responsable;
-
+    private List<Sensor> sensores;
 
     //Constructor
     public Mantenimiento(int idMantenimiento,LocalDate fecha,TipoMantenimiento tipo,String descripcion,Sensor sensor,ResponsableTecnico responsable){
@@ -22,6 +24,7 @@ public class Mantenimiento {
         this.descripcion=descripcion;
         this.sensor=sensor;
         this.responsable=responsable;
+        this.sensores= new ArrayList<Sensor>();
     }
 
     //getters y setters
@@ -72,5 +75,14 @@ public class Mantenimiento {
 
     public void setResponsable(ResponsableTecnico responsable) {
         this.responsable = responsable;
+    }
+
+    public List<Sensor> getSensores() {return sensores;}
+
+    public void setSensores(List<Sensor> sensores) {this.sensores = sensores;}
+
+    //metodo
+    public void agregarSensores(Sensor s){
+        this.sensores.add(s);
     }
 }

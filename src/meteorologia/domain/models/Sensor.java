@@ -16,16 +16,18 @@ public class Sensor {
     private EstadoOperativo estado;
     private LocalDate ultimaCalibracion;
     private List<Medicion> mediciones;
+    private List<Mantenimiento> mantenimientos;
 
     //constructor
-    public Sensor(int idSensor, String marca, String modelo, double precision, EstadoOperativo estado, LocalDate ultimaCalibracion,List<Medicion> mediciones) {
+    public Sensor(int idSensor, String marca, String modelo, double precision, EstadoOperativo estado, LocalDate ultimaCalibracion) {
         this.idSensor = idSensor;
         this.marca = marca;
         this.modelo = modelo;
         this.precision = precision;
         this.estado = estado;
         this.ultimaCalibracion = ultimaCalibracion;
-        this.mediciones = (mediciones != null) ? mediciones : new ArrayList<>();
+        this.mediciones = new ArrayList<Medicion>();
+        this.mantenimientos =new ArrayList<Mantenimiento>();
     }
 
     //getters y setters
@@ -76,6 +78,7 @@ public class Sensor {
     public void setUltimaCalibracion(LocalDate ultimaCalibracion) {
         this.ultimaCalibracion = ultimaCalibracion;
     }
+
     public List<Medicion> getMediciones() {
         return mediciones;
     }
@@ -84,9 +87,18 @@ public class Sensor {
         this.mediciones = mediciones;
     }
 
+    public List<Mantenimiento> getMantenimientos(){ return mantenimientos;}
 
+    public void setMantenimientos(List<Mantenimiento> mantenimientos) {this.mantenimientos = mantenimientos;}
 
     //metoodos
+    public void agregarMedicion(int idMedicion,LocalDateTime fechaHora,double milimetros,boolean anomala){
+        this.mediciones.add(new Medicion(idMedicion, fechaHora, milimetros, anomala));
+    }
+    public void agregarMantenimiento(Mantenimiento m){
+        this.mantenimientos.add(m);
+    }
+
     public void validar(double mm){
         if(mm < 0 || mm > 500 ){
             throw new LecturaInvalidaException("Error: la lectura de " + mm + "mm esta fuera de rango permitido (0 - 500 mm)");
