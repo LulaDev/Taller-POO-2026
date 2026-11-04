@@ -2,6 +2,7 @@ package meteorologia.domain.models;
 import meteorologia.domain.enums.NivelAlerta;
 import meteorologia.domain.enums.NivelVulnerabilidad;
 import meteorologia.domain.enums.TipoEventoClimatico;
+import meteorologia.domain.models.EstacionMeteorologica;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,7 +27,7 @@ public class ZonaGeografica {
         this.nombre=nombre;
         this.nivelVulnerabilidad=nivelVunerabilidad;
         this.nivelAlertaActual=nivelAlertaActual;
-        this.estaciones = (estaciones != null) ? estaciones : new ArrayList<>();
+        this.estaciones = new ArrayList<>();
         this.valoresHistoricos = new ArrayList<>();
         this.alertas = (alertas != null) ? alertas : new ArrayList<>();
         this.umbralAmarilla=umbralAmarilla;
@@ -106,7 +107,7 @@ public class ZonaGeografica {
     public void agregarValorHistorico(int mes, double acumuladoMedio){
         this.valoresHistoricos.add(new ValorHistorico(mes, acumuladoMedio));
     }
-}
+
     public double lluviaAcumulada24h(){
         LocalDateTime limite24h = LocalDateTime.now().minusHours(24);
         double totalAcumulado =0.0;
@@ -158,7 +159,7 @@ public class ZonaGeografica {
 
     public Alerta registrarAlertaOperador(NivelAlerta nivel, TipoEventoClimatico evento, String descripcion, EquipoRespuesta equipo) {
         // Regla: Alertas de nivel NARANJA o ROJA requieren asignación obligatoria de equipo
-        if ((nivel == NivelAlerta{.NARANJA || nivel == NivelAlerta.ROJA) && equipo == null) {
+        if ((nivel == NivelAlerta.NARANJA || nivel == NivelAlerta.ROJA) && equipo == null) {
             throw new IllegalArgumentException("Error: Las alertas de nivel " + nivel + " registradas por operador requieren un equipo de respuesta obligatorio.");
         }
 
