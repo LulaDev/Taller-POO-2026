@@ -8,16 +8,14 @@ public class ResponsableTecnico extends Persona{
     private String numeroLicencia;
     private List<EstacionMeteorologica> estacionesACargo;
     private List<Mantenimiento> mantenimientosRealizados;
-    private EquipoRespuesta equipoRespuesta;
 
     //constructor
-    public ResponsableTecnico(int dni, String nombre, String apellido, String correoElectronico, String celular, String especialidad, String numeroLicencia, EquipoRespuesta equipoRespuesta){
+    public ResponsableTecnico(int dni, String nombre, String apellido, String correoElectronico, String celular, String especialidad, String numeroLicencia){
         super(dni, nombre, apellido, correoElectronico, celular);
         this.especialidad=especialidad;
         this.numeroLicencia=numeroLicencia;
         this.estacionesACargo = new ArrayList<EstacionMeteorologica>();
         this.mantenimientosRealizados = new ArrayList<Mantenimiento>();
-        this.equipoRespuesta = equipoRespuesta;
     }
     
     //getters y  setters
@@ -51,14 +49,6 @@ public class ResponsableTecnico extends Persona{
 
     public void setMantenimientosRealizados(List<Mantenimiento> mantenimientosRealizados){
         this.mantenimientosRealizados = mantenimientosRealizados;
-    }
-
-    public EquipoRespuesta getEquipoRespuesta(){
-        return equipoRespuesta;
-    }
-
-    public void setEquipoRespuesta(EquipoRespuesta equipoRespuesta){
-        this.equipoRespuesta = equipoRespuesta;
     }
 
 

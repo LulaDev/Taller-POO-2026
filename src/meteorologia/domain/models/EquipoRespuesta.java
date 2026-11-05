@@ -10,11 +10,11 @@ public class EquipoRespuesta {
     private List<ResponsableTecnico> integrantes;
 
     //Constructor
-    public EquipoRespuesta(int idEquipo,String nombreEquipo,boolean disponible,List<ResponsableTecnico> integrantes){
+    public EquipoRespuesta(int idEquipo,String nombreEquipo,boolean disponible){
         this.idEquipo=idEquipo;
         this.nombreEquipo=nombreEquipo;
         this.disponible=disponible;
-        this.integrantes = (integrantes != null) ? integrantes : new ArrayList<>();
+        this.integrantes = new ArrayList<ResponsableTecnico>();
     }
 
     //getters y setters
