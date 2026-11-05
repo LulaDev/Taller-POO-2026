@@ -8,6 +8,7 @@ public class EquipoRespuesta {
     private String nombreEquipo;
     private boolean disponible;
     private List<ResponsableTecnico> integrantes;
+    private List<Alerta> alertas;
 
     //Constructor
     public EquipoRespuesta(int idEquipo,String nombreEquipo,boolean disponible){
@@ -15,6 +16,7 @@ public class EquipoRespuesta {
         this.nombreEquipo=nombreEquipo;
         this.disponible=disponible;
         this.integrantes = new ArrayList<ResponsableTecnico>();
+        this.alertas = new ArrayList<Alerta>();
     }
 
     //getters y setters
@@ -51,11 +53,21 @@ public class EquipoRespuesta {
         this.integrantes = integrantes;
     }
 
+    public List<Alerta> getAlertas() {
+        return alertas;
+    }
+
+    public void setAlertas(List<Alerta> alertas){
+        this.alertas = alertas;
+    }
+
     //metodo
     public void agregarIntegrante(ResponsableTecnico r){
-        if (r != null && !this.integrantes.contains(r)) {
-            this.integrantes.add(r);
-            r.setEquipoRespuesta(this);
-        }
+        this.integrantes.add(r);
     }
+
+    public void agregarAlerta(Alerta a){
+        this.alertas.add(a);
+    }
+    
 }
