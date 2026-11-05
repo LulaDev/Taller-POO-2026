@@ -19,6 +19,15 @@ public class EquipoRespuesta {
         this.alertas = new ArrayList<Alerta>();
     }
 
+    //metodo
+    public void agregarIntegrante(ResponsableTecnico r){
+        this.integrantes.add(r);
+    }
+
+    public void agregarAlerta(Alerta a){
+        this.alertas.add(a);
+    }
+    
     //getters y setters
 
     public int getIdEquipo() {
@@ -60,14 +69,4 @@ public class EquipoRespuesta {
     public void setAlertas(List<Alerta> alertas){
         this.alertas = alertas;
     }
-
-    //metodo
-    public void agregarIntegrante(ResponsableTecnico r){
-        this.integrantes.add(r);
-    }
-
-    public void agregarAlerta(Alerta a){
-        this.alertas.add(a);
-    }
-    
 }

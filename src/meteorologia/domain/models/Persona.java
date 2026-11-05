@@ -7,6 +7,7 @@ public abstract class Persona {
     protected String apellido;
     protected String correoElectronico;
     protected String celular;
+    
     //constructor
     public Persona(int dni,String nombre,String apellido,String correoElectronico,String celular){
         this.dni=dni;
@@ -15,6 +16,12 @@ public abstract class Persona {
         this.correoElectronico=correoElectronico;
         this.celular=celular;
     }
+
+    //metodo
+    public String getNombreCompleto(){
+        return this.nombre + " " + this.apellido;
+    }
+    
     //getters y setters
     public int getDni() {
         return dni;
@@ -54,9 +61,5 @@ public abstract class Persona {
 
     public void setCelular(String celular) {
         this.celular = celular;
-    }
-    //metodo
-    public String getNombreCompleto(){
-        return this.nombre + " " + this.apellido;
     }
 }
