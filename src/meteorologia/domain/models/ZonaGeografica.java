@@ -33,6 +33,85 @@ public class ZonaGeografica {
         this.umbralNaranja=umbralNaranja;
         this.umbralRoja=umbralRoja;
     }
+    //MÉTODOS
+    public void agregarValorHistorico(int mes, double acumuladoMedio){
+        this.valoresHistoricos.add(new ValorHistorico(mes, acumuladoMedio));
+    }
+
+    public void agregarEstacionMeteorologica(EstacionMeteorologica e){
+        this.estaciones.add(e);
+    }
+
+    public void agregarAlerta(Alerta a){
+        this.alertas.add(a);
+    }
+
+    public double lluviaAcumulada24h(){
+        LocalDateTime limite24h = LocalDateTime.now().minusHours(24);
+        double totalAcumulado =0.0;
+
+        for (EstacionMeteorologica estacion : estaciones){
+            if(estacion.estaOperativa()){
+                for(Sensor sensor : estacion.getSensores()){
+                    for (Medicion medicion : sensor.getMediciones()){
+                        if(medicion.getFechaHora().isAfter(limite24h)){
+                            totalAcumulado += medicion.getMilimetros();
+                        }
+                    }
+                }
+            }
+        }
+        return totalAcumulado;
+    }
+
+    public NivelAlerta evaluarRiesgo(){
+        double acumulada = this.lluviaAcumulada24h();
+        if(acumulada >= this.umbralRoja){
+            return NivelAlerta.ROJA;
+        } else if (acumulada >= this.umbralNaranja) {
+            return NivelAlerta.NARANJA;
+        } else if (acumulada >= this.umbralAmarilla) {
+            return NivelAlerta.AMARILLA;
+        } else {
+            return NivelAlerta.VERDE;
+        }
+    }
+
+    public Alerta emitirAlerta(TipoEventoClimatico ev, EquipoRespuesta equipo) {
+        NivelAlerta nuevoNivel = evaluarRiesgo();
+        this.nivelAlertaActual = nuevoNivel;
+
+        if ((nuevoNivel == NivelAlerta.NARANJA || nuevoNivel == NivelAlerta.ROJA) && equipo == null) {
+            throw new IllegalArgumentException("Error: Una alerta de nivel " + nuevoNivel + " requiere la asignación obligatoria de un equipo de respuesta.");
+        }
+
+        int nuevoId = this.alertas.size() + 1;
+        String desc = "Alerta emitida automáticamente por acumulación de lluvia en 24h: " + lluviaAcumulada24h() + " mm.";
+
+        boolean atendida = (equipo != null);
+        Alerta nuevaAlerta = new Alerta(nuevoId, LocalDateTime.now(), nuevoNivel, ev, desc, atendida, equipo, this);
+
+        this.alertas.add(nuevaAlerta);
+        return nuevaAlerta;
+    }
+
+    public Alerta registrarAlertaOperador(NivelAlerta nivel, TipoEventoClimatico evento, String descripcion, EquipoRespuesta equipo) {
+        // Regla: Alertas de nivel NARANJA o ROJA requieren asignación obligatoria de equipo
+        if ((nivel == NivelAlerta.NARANJA || nivel == NivelAlerta.ROJA) && equipo == null) {
+            throw new IllegalArgumentException("Error: Las alertas de nivel " + nivel + " registradas por operador requieren un equipo de respuesta obligatorio.");
+        }
+
+        int nuevoId = this.alertas.size() + 1;
+        boolean atendida = (equipo != null);
+
+        Alerta nuevaAlerta = new Alerta(nuevoId, LocalDateTime.now(), nivel, evento, descripcion, atendida, equipo, this);
+
+        // Se actualiza el nivel de alerta vigente de la zona y se añade a la lista
+        this.nivelAlertaActual = nivel;
+        this.alertas.add(nuevaAlerta);
+
+        return nuevaAlerta;
+    }
     //getters y setters
     public int getIdZona() {
         return idZona;
@@ -102,83 +181,5 @@ public class ZonaGeografica {
 
     public void setUmbralRoja(double umbralRoja) {this.umbralRoja = umbralRoja;}
 
-    //MÉTODOS
-    public void agregarValorHistorico(int mes, double acumuladoMedio){
-        this.valoresHistoricos.add(new ValorHistorico(mes, acumuladoMedio));
-    }
 
-    public void agregarEstacionMeteorologica(EstacionMeteorologica e){
-        this.estaciones.add(e);
-    }
-
-    public void agregarAlerta(Alerta a){
-        this.alertas.add(a);
-    }
-
-    public double lluviaAcumulada24h(){
-        LocalDateTime limite24h = LocalDateTime.now().minusHours(24);
-        double totalAcumulado =0.0;
-
-        for (EstacionMeteorologica estacion : estaciones){
-            if(estacion.estaOperativa()){
-                for(Sensor sensor : estacion.getSensores()){
-                    for (Medicion medicion : sensor.getMediciones()){
-                        if(medicion.getFechaHora().isAfter(limite24h)){
-                            totalAcumulado += medicion.getMilimetros();
-                        }
-                    }
-                }
-            }
-        }
-        return totalAcumulado;
-    }
-
-    public NivelAlerta evaluarRiesgo(){
-        double acumulada = this.lluviaAcumulada24h();
-        if(acumulada >= this.umbralRoja){
-            return NivelAlerta.ROJA;
-        } else if (acumulada >= this.umbralNaranja) {
-            return NivelAlerta.NARANJA;
-        } else if (acumulada >= this.umbralAmarilla) {
-            return NivelAlerta.AMARILLA;
-        } else {
-            return NivelAlerta.VERDE;
-        }
-    }
-
-    public Alerta emitirAlerta(TipoEventoClimatico ev, EquipoRespuesta equipo) {
-        NivelAlerta nuevoNivel = evaluarRiesgo();
-        this.nivelAlertaActual = nuevoNivel;
-
-        if ((nuevoNivel == NivelAlerta.NARANJA || nuevoNivel == NivelAlerta.ROJA) && equipo == null) {
-            throw new IllegalArgumentException("Error: Una alerta de nivel " + nuevoNivel + " requiere la asignación obligatoria de un equipo de respuesta.");
-        }
-
-        int nuevoId = this.alertas.size() + 1;
-        String desc = "Alerta emitida automáticamente por acumulación de lluvia en 24h: " + lluviaAcumulada24h() + " mm.";
-        
-        boolean atendida = (equipo != null);
-        Alerta nuevaAlerta = new Alerta(nuevoId, LocalDateTime.now(), nuevoNivel, ev, desc, atendida, equipo, this);
-        
-        this.alertas.add(nuevaAlerta);
-        return nuevaAlerta;
-    }
-
-    public Alerta registrarAlertaOperador(NivelAlerta nivel, TipoEventoClimatico evento, String descripcion, EquipoRespuesta equipo) {
-        // Regla: Alertas de nivel NARANJA o ROJA requieren asignación obligatoria de equipo
-        if ((nivel == NivelAlerta.NARANJA || nivel == NivelAlerta.ROJA) && equipo == null) {
-            throw new IllegalArgumentException("Error: Las alertas de nivel " + nivel + " registradas por operador requieren un equipo de respuesta obligatorio.");
-        }
-
-        int nuevoId = this.alertas.size() + 1;
-        boolean atendida = (equipo != null);
-        
-        Alerta nuevaAlerta = new Alerta(nuevoId, LocalDateTime.now(), nivel, evento, descripcion, atendida, equipo, this);
-        
-        // Se actualiza el nivel de alerta vigente de la zona y se añade a la lista
-        this.nivelAlertaActual = nivel;
-        this.alertas.add(nuevaAlerta);
-        
-        return nuevaAlerta;
-    }
 }

@@ -17,6 +17,13 @@ public class ResponsableTecnico extends Persona{
         this.estacionesACargo = new ArrayList<EstacionMeteorologica>();
         this.mantenimientosRealizados = new ArrayList<Mantenimiento>();
     }
+    //metodos
+    public void agregarEstacionMeteorologica(EstacionMeteorologica em){
+        this.estacionesACargo.add(em);
+    }
+    public void agregarMantenimiento(Mantenimiento ma){
+        this.mantenimientosRealizados.add(ma);
+    }
     
     //getters y  setters
     public String getEspecialidad() {
@@ -49,14 +56,5 @@ public class ResponsableTecnico extends Persona{
 
     public void setMantenimientosRealizados(List<Mantenimiento> mantenimientosRealizados){
         this.mantenimientosRealizados = mantenimientosRealizados;
-    }
-
-
-    //metodos
-    public void agregarEstacionMeteorologica(EstacionMeteorologica em){
-        this.estacionesACargo.add(em);
-    }
-    public void agregarMantenimiento(Mantenimiento ma){
-        this.mantenimientosRealizados.add(ma);
     }
 }

@@ -29,6 +29,44 @@ public class Sensor {
         this.mediciones = new ArrayList<Medicion>();
         this.mantenimientos =new ArrayList<Mantenimiento>();
     }
+    //metoodos
+    public void agregarMedicion(int idMedicion,LocalDateTime fechaHora,double milimetros,boolean anomala){
+        this.mediciones.add(new Medicion(idMedicion, fechaHora, milimetros, anomala));
+    }
+    public void agregarMantenimiento(Mantenimiento m){
+        this.mantenimientos.add(m);
+    }
+
+    public void validar(double mm){
+        if(mm < 0 || mm > 500 ){
+            throw new LecturaInvalidaException("Error: la lectura de " + mm + "mm esta fuera de rango permitido (0 - 500 mm)");
+        }
+    }
+
+    public boolean requiereCalibracion(){
+        if(this.ultimaCalibracion == null){
+            return true;
+        }
+        LocalDate fechaLimite = this.ultimaCalibracion.plusMonths(12);
+        return LocalDate.now().isAfter(fechaLimite);
+    }
+
+    public void registrar(double mm,LocalDateTime fh){
+        if (this.estado != EstadoOperativo.OPERATIVO) {
+            throw new IllegalStateException("No se pueden registrar mediciones en un sensor que no está operativo.");
+        }
+        validar(mm);
+        boolean anomala =false;
+        if(this.mediciones != null && !this.mediciones.isEmpty()){
+            Medicion ultimaMedicion=this.mediciones.get(this.mediciones.size()-1);
+            double diferencia = Math.abs(mm - ultimaMedicion.getMilimetros());
+            if (diferencia > 100.0){
+                anomala= true;
+            }
+        }
+        Medicion nuevaMedicion = new Medicion(mm, fh ,anomala);
+        this.mediciones.add(nuevaMedicion);
+    }
 
     //getters y setters
     public int getIdSensor() {
@@ -91,42 +129,5 @@ public class Sensor {
 
     public void setMantenimientos(List<Mantenimiento> mantenimientos) {this.mantenimientos = mantenimientos;}
 
-    //metoodos
-    public void agregarMedicion(int idMedicion,LocalDateTime fechaHora,double milimetros,boolean anomala){
-        this.mediciones.add(new Medicion(idMedicion, fechaHora, milimetros, anomala));
-    }
-    public void agregarMantenimiento(Mantenimiento m){
-        this.mantenimientos.add(m);
-    }
 
-    public void validar(double mm){
-        if(mm < 0 || mm > 500 ){
-            throw new LecturaInvalidaException("Error: la lectura de " + mm + "mm esta fuera de rango permitido (0 - 500 mm)");
-        }
-    }
-
-    public boolean requiereCalibracion(){
-        if(this.ultimaCalibracion == null){
-            return true;
-        }
-        LocalDate fechaLimite = this.ultimaCalibracion.plusMonths(12);
-        return LocalDate.now().isAfter(fechaLimite);
-    }
-
-    public void registrar(double mm,LocalDateTime fh){
-        if (this.estado != EstadoOperativo.OPERATIVO) {
-            throw new IllegalStateException("No se pueden registrar mediciones en un sensor que no está operativo.");
-        }
-        validar(mm);
-        boolean anomala =false;
-        if(this.mediciones != null && !this.mediciones.isEmpty()){
-            Medicion ultimaMedicion=this.mediciones.get(this.mediciones.size()-1);
-            double diferencia = Math.abs(mm - ultimaMedicion.getMilimetros());
-            if (diferencia > 100.0){
-                anomala= true;
-            }
-        }
-        Medicion nuevaMedicion = new Medicion(mm, fh ,anomala);
-        this.mediciones.add(nuevaMedicion);
-    }
 }

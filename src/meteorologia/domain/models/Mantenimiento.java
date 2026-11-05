@@ -24,6 +24,10 @@ public class Mantenimiento {
         this.responsable=responsable;
         this.sensores= new ArrayList<Sensor>();
     }
+    //metodo
+    public void agregarSensores(Sensor s){
+        this.sensores.add(s);
+    }
 
     //getters y setters
 
@@ -71,8 +75,5 @@ public class Mantenimiento {
 
     public void setSensores(List<Sensor> sensores) {this.sensores = sensores;}
 
-    //metodo
-    public void agregarSensores(Sensor s){
-        this.sensores.add(s);
-    }
+
 }

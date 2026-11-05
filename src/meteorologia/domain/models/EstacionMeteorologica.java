@@ -33,6 +33,25 @@ public class EstacionMeteorologica {
         this.mantenimientos = new ArrayList<Mantenimiento>();
         this.sensores = new ArrayList<Sensor>();
     }
+    //metodos
+    public void agregarMantenimiento(int idMantenimiento, LocalDate fecha, TipoMantenimiento tipo, String descripcion, Sensor sensor, ResponsableTecnico responsable){
+        this.mantenimientos.add(new Mantenimiento(idMantenimiento, fecha, tipo, descripcion, responsable));
+    }
+
+    public void instalarSensor(Sensor s){
+        if (s != null) {
+            this.sensores.add(s);
+        }
+    }
+    public void retirarSensor(Sensor s){
+        if (s != null) {
+            this.sensores.remove(s);
+        }
+    }
+    public boolean estaOperativa(){
+        return this.estado == EstadoOperativo.OPERATIVO;
+    }
+
 
     //getters y setters
 
@@ -106,25 +125,6 @@ public class EstacionMeteorologica {
 
     public void setResponsableTecnico(ResponsableTecnico responsableTecnico) {
         this.responsableTecnico = responsableTecnico;
-    }
-
-    //metodos
-    public void agregarMantenimiento(int idMantenimiento, LocalDate fecha, TipoMantenimiento tipo, String descripcion, Sensor sensor, ResponsableTecnico responsable){
-        this.mantenimientos.add(new Mantenimiento(idMantenimiento, fecha, tipo, descripcion, responsable));
-    }
-
-    public void instalarSensor(Sensor s){
-        if (s != null) {
-            this.sensores.add(s);
-        }
-    }
-    public void retirarSensor(Sensor s){
-        if (s != null) {
-            this.sensores.remove(s);
-        }
-    }
-    public boolean estaOperativa(){
-        return this.estado == EstadoOperativo.OPERATIVO;
     }
 
 }
