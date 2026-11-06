@@ -1,11 +1,27 @@
+/*
+ * Nombre de la clase: Alerta.java
+ * Versión: 1.0
+ * Fecha: 2026-11-05
+ * Copyright: POO Taller 2026 - FCAD UNER
+ */
+
 package meteorologia.domain.models;
+
 import meteorologia.domain.enums.NivelAlerta;
 import meteorologia.domain.enums.TipoEventoClimatico;
 
 import java.time.LocalDateTime;
 
+/**
+ * Representa una alerta meteorológica emitida ante situaciones de riesgo o eventos climáticos severos,
+ * la cual gestiona su nivel de severidad y la asignación opcional u obligatoria de un equipo de respuesta.
+ * 
+ * @author Lautaro Joaquin Fernandez; Ludmila Mildemberger
+ * @version 1.0
+ */
 public class Alerta {
-    //atributos
+
+    // Atributos de instancia
     private int idAlerta;
     private LocalDateTime fechaHoraEmision;
     private NivelAlerta nivel;
@@ -15,7 +31,18 @@ public class Alerta {
     private EquipoRespuesta equipoRespuesta;
     private ZonaGeografica zona;
 
-    //constructor
+    /**
+     * Constructor con parámetros para inicializar una alerta incluyendo su equipo de respuesta asignado.
+     * 
+     * @param idAlerta Identificador único de la alerta.
+     * @param fechaHoraEmision Fecha y hora de emisión de la alerta.
+     * @param nivel Nivel de severidad (Verde, Amarilla, Naranja, Roja).
+     * @param evento Tipo de evento climático asociado.
+     * @param descripcion Descripción detallada de la alerta.
+     * @param atendida Estado de atención de la alerta.
+     * @param equipoRespuesta Equipo de respuesta técnica asignado.
+     * @param zona Zona geográfica afectada.
+     */
     public Alerta(int idAlerta, LocalDateTime fechaHoraEmision, NivelAlerta nivel, TipoEventoClimatico evento, String descripcion, boolean atendida, EquipoRespuesta equipoRespuesta, ZonaGeografica zona){
         this.idAlerta = idAlerta;
         this.fechaHoraEmision = fechaHoraEmision;
@@ -27,7 +54,17 @@ public class Alerta {
         this.zona = zona;
     }
 
-    //constructor sin equipoRespuesta
+    /**
+     * Constructor alternativo sin equipo de respuesta asignado inicialmente.
+     * 
+     * @param idAlerta Identificador único de la alerta.
+     * @param fechaHoraEmision Fecha y hora de emisión.
+     * @param nivel Nivel de severidad.
+     * @param evento Tipo de evento climático.
+     * @param descripcion Descripción de la alerta.
+     * @param atendida Estado de atención.
+     * @param zona Zona geográfica afectada.
+     */
     public Alerta(int idAlerta, LocalDateTime fechaHoraEmision, NivelAlerta nivel, TipoEventoClimatico evento, String descripcion, boolean atendida, ZonaGeografica zona){
         this.idAlerta = idAlerta;
         this.fechaHoraEmision = fechaHoraEmision;
@@ -38,7 +75,11 @@ public class Alerta {
         this.zona = zona;
     }
 
-    //metodos
+    /**
+     * Asigna un equipo de respuesta técnica a la alerta y marca la alerta como atendida.
+     * 
+     * @param e Equipo de respuesta a enlazar.
+     */
     public void asignarEquipo(EquipoRespuesta e){
         if (e != null) {
             this.equipoRespuesta = e;
@@ -46,11 +87,16 @@ public class Alerta {
         }
     }
 
+    /**
+     * Evalúa si el nivel de la alerta requiere obligatoriamente un equipo de respuesta (Naranja o Roja)[cite: 4, 6].
+     * 
+     * @return true si requiere equipo, false en caso contrario.
+     */
     public boolean requiereEquipo(){
         return this.nivel == NivelAlerta.NARANJA || this.nivel == NivelAlerta.ROJA;
     }
     
-    //getters y setters
+    // Getters y Setters
     public int getIdAlerta() {return idAlerta;}
 
     public void setIdAlerta(int idAlerta) {this.idAlerta = idAlerta;}
@@ -79,7 +125,7 @@ public class Alerta {
 
     public void setEquipoRespuesta(EquipoRespuesta equipoRespuesta) {this.equipoRespuesta = equipoRespuesta;}
 
-    public ZonaGeografica getZona(){return zona;}
+    public ZonaGeografica getZona() {return zona;}
 
-    public void setZona(ZonaGeografica zona){this.zona = zona;}
+    public void setZona(ZonaGeografica zona) {this.zona = zona;}
 }
