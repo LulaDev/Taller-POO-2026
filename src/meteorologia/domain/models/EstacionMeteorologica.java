@@ -44,8 +44,8 @@ public class EstacionMeteorologica {
      * @param latitud Coordenada de latitud georreferenciada.
      * @param longitud Coordenada de longitud georreferenciada.
      * @param altitud Altitud sobre el nivel del mar.
-     * @param estado Estado operativo actual (Operativo, En Mantenimiento, Fuera de Servicio)[cite: 4].
-     * @param tipo Tipo de estación (Automática o Convencional)[cite: 4].
+     * @param estado Estado operativo actual (Operativo, En Mantenimiento, Fuera de Servicio).
+     * @param tipo Tipo de estación (Automática o Convencional).
      * @param responsableTecnico Responsable técnico supervisor a cargo.
      */
     public EstacionMeteorologica(int idEstacion, String nombre, double latitud, double longitud, double altitud, EstadoOperativo estado, TipoEstacion tipo, ResponsableTecnico responsableTecnico){
@@ -66,7 +66,7 @@ public class EstacionMeteorologica {
      * 
      * @param idMantenimiento Identificador del mantenimiento.
      * @param fecha Fecha en la que se realizó.
-     * @param tipo Tipología de la intervención (Preventivo, Correctivo, Calibración)[cite: 4].
+     * @param tipo Tipología de la intervención (Preventivo, Correctivo, Calibración).
      * @param descripcion Detalle de la tarea realizada.
      * @param sensor Sensor asociado al mantenimiento.
      * @param responsable Responsable técnico ejecutor.

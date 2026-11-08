@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * Modela una intervención de mantenimiento realizada sobre los componentes o sensores 
- * de la red de estaciones meteorológicas[cite: 4, 6].
+ * de la red de estaciones meteorológicas.
  * 
  * @author Lautaro Joaquin Fernandez; Ludmila Mildemberger
  * @version 1.0
@@ -35,7 +35,7 @@ public class Mantenimiento {
      * 
      * @param idMantenimiento Identificador único del mantenimiento.
      * @param fecha Fecha en que se llevó a cabo la tarea.
-     * @param tipo Tipo de mantenimiento (Preventivo, Correctivo, Calibración)[cite: 4].
+     * @param tipo Tipo de mantenimiento (Preventivo, Correctivo, Calibración).
      * @param descripcion Descripción de la tarea ejecutada.
      * @param responsable Responsable técnico a cargo del trabajo.
      * @param sensor Sensor específico objeto del mantenimiento.
@@ -54,7 +54,7 @@ public class Mantenimiento {
      * 
      * @param idMantenimiento Identificador único del mantenimiento.
      * @param fecha Fecha del mantenimiento.
-     * @param tipo Tipo de mantenimiento[cite: 4].
+     * @param tipo Tipo de mantenimiento.
      * @param descripcion Descripción de la tarea.
      * @param responsable Responsable técnico a cargo.
      */
