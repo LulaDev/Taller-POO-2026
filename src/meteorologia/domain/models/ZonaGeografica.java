@@ -53,10 +53,10 @@ public class ZonaGeografica {
      * @param umbralNaranja Límite inferior en milímetros para activar el nivel naranja.
      * @param umbralRoja Límite inferior en milímetros para activar el nivel rojo.
      */
-    public ZonaGeografica(int idZona, String nombre, NivelVulnerabilidad nivelVunerabilidad, NivelAlerta nivelAlertaActual, double umbralAmarilla, double umbralNaranja, double umbralRoja){
+    public ZonaGeografica(int idZona, String nombre, NivelVulnerabilidad nivelVulnerabilidad, NivelAlerta nivelAlertaActual, double umbralAmarilla, double umbralNaranja, double umbralRoja){
         this.idZona=idZona;
         this.nombre=nombre;
-        this.nivelVulnerabilidad=nivelVunerabilidad;
+        this.nivelVulnerabilidad=nivelVulnerabilidad;
         this.nivelAlertaActual=nivelAlertaActual;
         this.valoresHistoricos = new ArrayList<ValorHistorico>();
         this.estaciones = new ArrayList<EstacionMeteorologica>();
