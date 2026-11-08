@@ -149,27 +149,21 @@ public class ZonaGeografica {
         }
     }
 
-    /**
-     * Emite una alerta de forma automática al superar los umbrales críticos de precipitación,
-     * validando la obligatoriedad de asignar un equipo de respuesta ante niveles elevados.
+/**
+     * Emite una alerta de forma automática al superar los umbrales críticos de precipitación.
      * 
      * @param ev Tipo de evento climático detectado.
-     * @param equipo Equipo de respuesta técnica a asignar (obligatorio para Naranja y Roja).
      * @return La Alerta generada y registrada en el sistema.
-     * @throws IllegalArgumentException Si el nivel de riesgo exige equipo y este parámetro es nulo.
      */
     public Alerta emitirAlerta(TipoEventoClimatico ev) {
         NivelAlerta nuevoNivel = evaluarRiesgo();
         this.nivelAlertaActual = nuevoNivel;
 
-        if ((nuevoNivel == NivelAlerta.NARANJA || nuevoNivel == NivelAlerta.ROJA) && equipo == null) {
-            throw new IllegalArgumentException("Error: Una alerta de nivel " + nuevoNivel + " requiere la asignación obligatoria de un equipo de respuesta.");
-        }
-
         int nuevoId = this.alertas.size() + 1;
         String desc = "Alerta emitida automáticamente por acumulación de lluvia en 24h: " + lluviaAcumulada24h() + " mm.";
 
-        boolean atendida = (equipo != null);
+        boolean atendida = false; 
+
         Alerta nuevaAlerta = new Alerta(nuevoId, LocalDateTime.now(), nuevoNivel, ev, desc, atendida, this);
 
         this.alertas.add(nuevaAlerta);
