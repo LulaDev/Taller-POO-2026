@@ -1,89 +1,101 @@
+/*
+ * Nombre de la clase: SistemaMeteorologico.java
+ * Versión: 1.0
+ * Fecha: 2026-11-05
+ * Copyright: POO Taller 2026 - FCAD UNER
+ */
+
 package meteorologia.aplication;
-import meteorologia.domain.enums.EstadoOperativo;
+
 import meteorologia.domain.models.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase gestora principal del sistema. Administra el almacenamiento en memoria 
+ * y las altas de las zonas geográficas, estaciones meteorológicas, 
+ * personal técnico y equipos de respuesta especializados.
+ * 
+ * @author Lautaro Joaquin Fernandez; Ludmila Mildemberger
+ * @version 1.0
+ */
 public class SistemaMeteorologico {
+
+    // Atributos de instancia (Colecciones del sistema)
     private List<ZonaGeografica> zonas;
     private List<EstacionMeteorologica> estaciones;
     private List<ResponsableTecnico> responsables;
     private List<EquipoRespuesta> equipos;
 
+    /**
+     * Constructor por defecto. Inicializa las listas vacías para el almacenamiento en memoria.
+     */
     public SistemaMeteorologico() {
-        this.zonas = new ArrayList<>();
-        this.estaciones = new ArrayList<>();
-        this.responsables = new ArrayList<>();
-        this.equipos = new ArrayList<>();
+        this.zonas = new ArrayList<ZonaGeografica>();
+        this.estaciones = new ArrayList<EstacionMeteorologica>();
+        this.responsables = new ArrayList<ResponsableTecnico>();
+        this.equipos = new ArrayList<EquipoRespuesta>();
     }
 
-    public void mostrarRankingEstaciones() {
-        System.out.println("\n--- Ranking de estaciones por volumetría ---");
-        
-        if (estaciones == null || estaciones.isEmpty()) {
-            System.out.println("No hay estaciones registradas.");
-            return;
-        }
-
-        // Creamos una lista auxiliar para asociar cada estación con su total acumulado
-        // O podemos usar un algoritmo de ordenamiento tradicional sobre la lista de estaciones.
-        // Copiamos las estaciones a una nueva lista para no alterar el orden original de forma permanente
-        List<EstacionMeteorologica> listaOrdenada = new ArrayList<>(estaciones);
-
-        // Ordenamiento burbuja o usando Collections.sort con un Comparator tradicional
-        listaOrdenada.sort(new java.util.Comparator<EstacionMeteorologica>() {
-            @Override
-            public int compare(EstacionMeteorologica e1, EstacionMeteorologica e2) {
-                double suma1 = calcularTotalEstacion(e1);
-                double suma2 = calcularTotalEstacion(e2);
-                // Orden descendente (de mayor a menor)
-                return Double.compare(suma2, suma1);
-            }
-        });
-
-        // Mostrar resultados con bucle for clásico
-        for (int i = 0; i < listaOrdenada.size(); i++) {
-            EstacionMeteorologica est = listaOrdenada.get(i);
-            double total = calcularTotalEstacion(est);
-            System.out.println((i + 1) + ". Estación: " + est.getNombre() + " | Acumulado Total: " + total + " mm");
+    /**
+     * Incorpora una nueva zona geográfica o cuenca hidrográfica al sistema.
+     * 
+     * @param z Objeto ZonaGeografica a registrar.
+     */
+    public void agregarZona(ZonaGeografica z) {
+        if (z != null) {
+            this.zonas.add(z);
         }
     }
 
-    // Método auxiliar privado para sumar los milímetros de una estación con estructuras básicas
-    private double calcularTotalEstacion(EstacionMeteorologica estacion) {
-        double total = 0.0;
-        if (estacion.getSensores() != null) {
-            for (Sensor sensor : estacion.getSensores()) {
-                if (sensor.getMediciones() != null) {
-                    for (Medicion medicion : sensor.getMediciones()) {
-                        total += medicion.getMilimetros();
-                    }
-                }
-            }
+    /**
+     * Registra una nueva estación meteorológica en el sistema.
+     * 
+     * @param e Objeto EstacionMeteorologica a registrar.
+     */
+    public void agregarEstacion(EstacionMeteorologica e) {
+        if (e != null) {
+            this.estaciones.add(e);
         }
-        return total;
     }
 
-    public void mostrarInformeFallasYCalibracion() {
-        System.out.println("\n Informe de Fallas y Calibración");
-        for (EstacionMeteorologica est : estaciones) {
-            for (Sensor sen : est.getSensores()) {
-                if (sen.getEstado() != EstadoOperativo.OPERATIVO) {
-                    System.out.println("Fuerade Servicio / Mantenimiento - Estación: " + est.getNombre() + " - Sensor ID: " + sen.getIdSensor());
-                }
-                if (sen.requiereCalibracion()) {
-                    System.out.println("Requiere Calibración (>12 meses) - Estación: " + est.getNombre() + " - Sensor ID: " + sen.getIdSensor());
-                }
-            }
+    /**
+     * Da de alta a un responsable técnico encargado de la supervisión y mantenimiento.
+     * 
+     * @param r Objeto ResponsableTecnico a registrar.
+     */
+    public void agregarResponsable(ResponsableTecnico r) {
+        if (r != null) {
+            this.responsables.add(r);
         }
     }
-    // Getters
-    public void agregarZona(ZonaGeografica z) { zonas.add(z); }
-    public void agregarEstacion(EstacionMeteorologica e) { estaciones.add(e); }
-    public void agregarResponsable(ResponsableTecnico r) { responsables.add(r); }
-    public void agregarEquipo(EquipoRespuesta eq) { equipos.add(eq); }
-    public List<ZonaGeografica> getZonas() { return zonas; }
-    public List<EstacionMeteorologica> getEstaciones() { return estaciones; }
+
+    /**
+     * Registra un equipo de respuesta técnica para emergencias y alertas críticas.
+     * 
+     * @param eq Objeto EquipoRespuesta a registrar.
+     */
+    public void agregarEquipo(EquipoRespuesta eq) {
+        if (eq != null) {
+            this.equipos.add(eq);
+        }
+    }
+
+    // Getters y Setters
+    public List<ZonaGeografica> getZonas() {return zonas;}
+
+    public void setZonas(List<ZonaGeografica> zonas) {this.zonas = zonas;}
+
+    public List<EstacionMeteorologica> getEstaciones() {return estaciones;}
+
+    public void setEstaciones(List<EstacionMeteorologica> estaciones) {this.estaciones = estaciones;}
+
+    public List<ResponsableTecnico> getResponsables() {return responsables;}
+
+    public void setResponsables(List<ResponsableTecnico> responsables) {this.responsables = responsables;}
+
+    public List<EquipoRespuesta> getEquipos() {return equipos;}
+
+    public void setEquipos(List<EquipoRespuesta> equipos) {this.equipos = equipos;}
 }
-
